@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", '*k4_&p)#+7rj1dc3kw3eagk*)_+g8mwf2&a4p
 debug_env = os.environ.get("DEBUG", "True").lower()
 DEBUG = debug_env == "true"
 
-ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "sennearchiv.de"]
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "sennearchiv.de", "www.sennearchiv.de"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
