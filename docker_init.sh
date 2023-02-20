@@ -2,7 +2,7 @@
 
 mkdir -p media
 cd media
-umask 011
+umask 000
 cd ..
 
 pipenv run gunicorn -b 0.0.0.0:8000 senne.wsgi
