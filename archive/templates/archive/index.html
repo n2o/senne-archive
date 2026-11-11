@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
-{% load senne_common %}
-{% load admin_urls %}
+{% load static %}
 
-{% block page-title %}
-  Archiv
-{% endblock %}
+{% block page-title %}Archiv{% endblock %}
 
 {% block page-header %}
-  Archiv
+  <div class="page-header">
+    <h1>Archiv</h1>
+  </div>
 {% endblock %}
 
 {% block styles %}
@@ -18,75 +16,72 @@
 
 {% block content %}
   <p class="lead">
-    Hier können Sie unser Archiv durchsuchen. Benutzen Sie diese Eingabemaske, um in den Titeln und in den Abstracts zu
-    suchen.
+    Hier können Sie unser Archiv durchsuchen. Benutzen Sie diese Eingabemaske, um in den Titeln, Abstracts, Notizen und
+    Schlagworten zu suchen.
   </p>
 
-  <br>
-
-  <form action="" method="get" id="search-form">
+  <form action="" method="get" id="search-form" role="search" class="mt-4">
     <div class="form-group">
-      <label for="q">Stichwörter (durchsucht Titel, Abstract und Notizen)</label>
-      <input class="form-control form-control-lg" name="q"
-             placeholder="Beispielsweise Senne, Sennelandschaft, ..." value="{{ request.GET.q }}">
+      <label for="q">Stichwörter</label>
+      <input class="form-control form-control-lg" type="search" id="q" name="q"
+             aria-describedby="q-help" value="{{ query }}"
+             placeholder="Beispielsweise Senne, Sennelandschaft, ...">
+      <small id="q-help" class="form-text text-muted">
+        Durchsucht Titel, Abstract, Notizen und Schlagworte.
+      </small>
     </div>
 
     <div class="form-group">
-      <label for="author-list">
-        Suche auf einen Autor beschränken. Zeigt alle Artikel eines Autors, wenn ein Autor ausgewählt wurde und keine
-        Stichwörter eingegeben wurden.
-      </label>
-      <select class="form-control" id="author-list" name="autor">
+      <label for="author-list">Autor</label>
+      <select class="form-control" id="author-list" name="autor" aria-describedby="author-help">
         <option value="">Alle Autoren</option>
         {% for author in authors %}
-          <option value="{{ author.pk }}"
-                  {% if author.pk|stringformat:"s" == request.GET.autor %}selected="selected"{% endif %}>
+          <option value="{{ author.pk }}" {% if author == selected_author %}selected{% endif %}>
             {{ author }}
           </option>
         {% endfor %}
       </select>
+      <small id="author-help" class="form-text text-muted">
+        Beschränkt die Suche auf einen Autor. Ohne Stichwörter werden alle Artikel des gewählten Autors angezeigt.
+      </small>
     </div>
     <button type="submit" class="btn btn-primary">Suche starten</button>
-    <a class="btn btn-secondary btn-white pull-right" href="{% url 'archive:index' %}">Suche leeren</a>
+    <a class="btn btn-secondary btn-white float-right" href="{% url 'archive:index' %}">Suche leeren</a>
   </form>
-
-  <br>
 
   <div class="spacer"></div>
 
   {% if items %}
+    <div class="table-responsive">
     <table class="table table-striped">
+      <caption class="sr-only">Suchergebnisse</caption>
       <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Titel</th>
-        <th scope="col" width="20%">Autor</th>
+        <th scope="col" class="w-25">Autor</th>
         <th scope="col">Medienart</th>
-        <th scope="col" {% if user.is_staff %}width="15%"{% endif %}></th>
+        <th scope="col"><span class="sr-only">Aktionen</span></th>
       </tr>
       </thead>
       <tbody>
       {% for item in items %}
         <tr>
-          <th scope="row">{{ forloop.counter|add:forloop_modifier }}</th>
+          <th scope="row">{{ items.start_index|add:forloop.counter0 }}</th>
           <td>
-            <a href="{% url 'archive:details' pk=item.pk %}">
-              {{ item.title }}
-            </a>
+            <a href="{% url 'archive:details' pk=item.pk %}">{{ item.title }}</a>
           </td>
           <td>
-            <a href="{% url 'archive:index' %}?autor={{ item.author.pk }}" data-toggle="tooltip"
-               title="Zeige alle Artikel dieses Autors">
-              {{ item.author }}
-            </a>
+            <a href="{% url 'archive:index' %}?autor={{ item.author.pk }}"
+               title="Zeige alle Artikel dieses Autors">{{ item.author }}</a>
           </td>
           <td>{{ item.medart }}</td>
-          <td class="text-right">
-            <a href="{% url 'archive:details' pk=item.pk %}" type="button" class="btn btn-secondary btn-sm btn-white">
-              Details
+          <td class="text-right text-nowrap">
+            <a href="{% url 'archive:details' pk=item.pk %}" class="btn btn-secondary btn-sm btn-white">
+              Details<span class="sr-only">: {{ item.title }}</span>
             </a>
             {% if user.is_staff %}
-              <a type="button" class="btn btn-info btn-sm btn-white"
+              <a class="btn btn-info btn-sm btn-white" aria-label="Artikel bearbeiten: {{ item.title }}"
                  href="{% url "admin:archive_item_change" item.id %}">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </a>
@@ -96,72 +91,61 @@
       {% endfor %}
       </tbody>
     </table>
-  {% else %}
-    {% if empty_result and not no_results %}
-      <div class="alert alert-warning" role="alert">
-        Bitte grenzen Sie die Suche ein, indem Sie das Formular oben mit Stichworten befüllen oder einen Autor
-        auswählen, für den Sie gerne die Artikel sehen würden.
-      </div>
-    {% endif %}
-  {% endif %}
-
-  {% if no_results %}
-    <div class="alert alert-info" role="alert">
+    </div>
+  {% elif searched %}
+    <div class="alert alert-info" role="status">
       Es konnten keine Ergebnisse gefunden werden. Probieren Sie es mit einer anderen Suche.
+    </div>
+  {% elif empty_search %}
+    <div class="alert alert-warning" role="alert">
+      Bitte grenzen Sie die Suche ein, indem Sie das Formular oben mit Stichworten befüllen oder einen Autor
+      auswählen, für den Sie gerne die Artikel sehen würden.
     </div>
   {% endif %}
 
   {% if items.has_other_pages %}
-    <nav>
+    <nav aria-label="Seitennavigation">
       <ul class="pagination">
         {% if items.has_previous %}
           <li class="page-item">
-            <a class="page-link"
-               href="?q={{ request.GET.q }}&autor={{ request.GET.autor }}&seite={{ items.previous_page_number }}">&laquo;</a>
+            <a class="page-link" aria-label="Vorherige Seite"
+               href="?q={{ query|urlencode }}&autor={{ selected_author.pk|default:'' }}&seite={{ items.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a>
           </li>
         {% else %}
-          <li class="disabled page-item">
-            <a class="page-link">
-              &laquo;
-            </a>
+          <li class="page-item disabled">
+            <span class="page-link" aria-disabled="true"><span class="sr-only">Vorherige Seite</span><span aria-hidden="true">&laquo;</span></span>
           </li>
         {% endif %}
         {% for i in items.paginator.page_range %}
           {% if items.number == i %}
-            <li class="active page-item">
-              <a class="page-link">
-                {{ i }} <span class="sr-only">(current)</span>
-              </a>
+            <li class="page-item active">
+              <span class="page-link" aria-current="page"><span class="sr-only">Seite </span>{{ i }}</span>
             </li>
           {% else %}
             <li class="page-item">
-              <a class="page-link" href="?q={{ request.GET.q }}&autor={{ request.GET.autor }}&seite={{ i }}">{{ i }}</a>
+              <a class="page-link" aria-label="Seite {{ i }}"
+                 href="?q={{ query|urlencode }}&autor={{ selected_author.pk|default:'' }}&seite={{ i }}">{{ i }}</a>
             </li>
           {% endif %}
         {% endfor %}
         {% if items.has_next %}
           <li class="page-item">
-            <a class="page-link"
-               href="?q={{ request.GET.q }}&autor={{ request.GET.autor }}&seite={{ items.next_page_number }}">&raquo;</a>
+            <a class="page-link" aria-label="Nächste Seite"
+               href="?q={{ query|urlencode }}&autor={{ selected_author.pk|default:'' }}&seite={{ items.next_page_number }}"><span aria-hidden="true">&raquo;</span></a>
           </li>
         {% else %}
-          <li class="disabled page-item">
-            <a class="page-link">
-              &raquo;
-            </a>
+          <li class="page-item disabled">
+            <span class="page-link" aria-disabled="true"><span class="sr-only">Nächste Seite</span><span aria-hidden="true">&raquo;</span></span>
           </li>
         {% endif %}
       </ul>
     </nav>
   {% endif %}
+{% endblock %}
 
-  {% block after_content %}
-    <script src="{% static 'select2/dist/js/select2.min.js' %}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#author-list').select2();
-        });
-    </script>
-  {% endblock %}
-
+{% block after_content %}
+  <script src="{% static 'select2/dist/js/select2.min.js' %}"></script>
+  <script>
+      $('#author-list').select2({width: '100%'});
+  </script>
 {% endblock %}

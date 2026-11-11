@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
 {% load senne_common %}
 {% load sorl_thumbnail %}
 
@@ -9,118 +8,92 @@
 {% endblock %}
 
 {% block page-header %}
-  Detailansicht
+  <div class="page-header">
+    <h1>{{ item.title }}</h1>
+  </div>
 {% endblock %}
 
 {% block content %}
-  <div class="card" style="margin-top: 2rem;">
+  <div class="card mt-4">
     <div class="card-header">
-      {{ item.title }}
+      <h2 class="h5 mb-0 pt-0">Angaben</h2>
     </div>
     <div class="card-body">
       <div class="card-text">
         <div class="row">
-          <div class="col-6">
+          <div class="col-12 col-md-6">
             <p>
               Autor:
-              <a href="{% url 'archive:index' %}?autor={{ item.author.pk }}" data-toggle="tooltip"
+              <a href="{% url 'archive:index' %}?autor={{ item.author.pk }}"
                  title="Zeige alle Artikel dieses Autors">
                 {{ item.author }}
               </a>
             </p>
-            {{ item.place|paragraph_if_field_exists:"Ort der Veröffentlichung"|safe }}
-            {{ item.source_title|paragraph_if_field_exists:"Quelltitel"|safe }}
+            {{ item.place|paragraph_if_field_exists:"Ort der Veröffentlichung" }}
+            {{ item.source_title|paragraph_if_field_exists:"Quelltitel" }}
           </div>
-          <div class="col-3">
+          <div class="col-12 col-md-3">
             {% if item.digital_reference %}
               <a class="btn btn-link" href="{{ item.digital_reference }}">
-                <i class="fa fa-external-link" style="padding-right:0.2em"></i>
+                <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
                 {{ item.digital_reference }}
               </a>
             {% endif %}
           </div>
-          <div class="col-3">
-            <div class="card pull-right" style="margin-left: 1rem">
-              <div class="card-body" style="padding: 1rem">
-                {{ item.medart|or_blank_with_title:"Art"|safe }}
-                {{ item.year|or_blank_with_title:"Jahr"|safe }}
-                {{ item.pages|or_blank_with_title:"Seiten"|safe }}
-                {{ item.amount|or_blank_with_title:"Anzahl"|safe }}
+          <div class="col-12 col-md-3">
+            <div class="card">
+              <div class="card-body p-3">
+                {{ item.medart|or_blank_with_title:"Art" }}
+                {{ item.year|or_blank_with_title:"Jahr" }}
+                {{ item.pages|or_blank_with_title:"Seiten" }}
+                {{ item.amount|or_blank_with_title:"Anzahl" }}
               </div>
             </div>
           </div>
         </div>
-        {{ item.abstract|heading_if_field_exists:"Abstract"|safe }}
+        {{ item.abstract|heading_if_field_exists:"Abstract" }}
 
-        {% if item.file1 %}
+        {% if item.files %}
           <hr>
-          <h4>Anhänge</h4>
-          <a class="btn btn-link" href="{{ item.file1.url }}">
-            {{ item.file1.name|get_extension|fa_attachment|safe }} {{ item.file1.name|extract_filename }}
-          </a>
-          {% if item.file2 %}
-            <span style="padding-left: 3rem"></span>
-            <a class="btn btn-link" href="{{ item.file2.url }}">
-              {{ item.file2.name|get_extension|fa_attachment|safe }} {{ item.file2.name|extract_filename }}
+          <h2 class="h4">Anhänge</h2>
+          {% for file in item.files %}
+            <a class="btn btn-link" href="{{ file.url }}">
+              {{ file.name|fa_attachment }} {{ file.name|extract_filename }}
             </a>
-          {% endif %}
-          {% if item.file3 %}
-            <span style="padding-left: 3rem"></span>
-            <a class="btn btn-link" href="{{ item.file3.url }}">
-              {{ item.file3.name|get_extension|fa_attachment|safe }} {{ item.file3.name|extract_filename }}
-            </a>
-          {% endif %}
+          {% endfor %}
         {% endif %}
 
         {% if item.notes %}
           <hr>
         {% endif %}
-        {{ item.notes|heading_if_field_exists:"Notizen"|safe }}
+        {{ item.notes|heading_if_field_exists:"Notizen" }}
 
         {% if item.keywords %}
           <hr>
         {% endif %}
-        {{ item.keywords|heading_if_field_exists:"Schlagworte"|safe }}
+        {{ item.keywords|heading_if_field_exists:"Schlagworte" }}
       </div>
     </div>
   </div>
 
-  {% if item.image1 %}
-    <div class="card" style="margin-top: 1rem">
+  {% if item.images %}
+    <div class="card mt-3">
       <div class="card-header">
-        Bilder
+        <h2 class="h5 mb-0 pt-0">Bilder</h2>
       </div>
       <div class="card-body">
         <div class="card-text">
           <div class="row">
-            <div class="col-4 text-center">
-              <a href="{{ item.image1.url }}" data-lightbox="archive">
-                {% thumbnail item.image1 "350" as img %}
-                  <img src="{{ img.url }}" alt="Senne Detail Image 1"
-                       class="img-fluid material-card material-card-2">
-                {% endthumbnail %}
-              </a>
-            </div>
-            {% if item.image2 %}
-              <div class="col-4 text-center">
-                <a href="{{ item.image2.url }}" data-lightbox="archive">
-                  {% thumbnail item.image2 "350" as img %}
-                    <img src="{{ img.url }}" alt="Senne Detail Image 2"
-                         class="img-fluid material-card material-card-2">
+            {% for image in item.images %}
+              <div class="col-12 col-md-4 text-center mb-3">
+                <a href="{{ image.url }}" data-lightbox="archive" data-title="{{ item.title }} &ndash; Abbildung {{ forloop.counter }}">
+                  {% thumbnail image "350" as img %}
+                    <img src="{{ img.url }}" alt="{{ item.title }} &ndash; Abbildung {{ forloop.counter }}"
+                         class="img-fluid material-card">
                   {% endthumbnail %}
                 </a>
               </div>
-            {% endif %}
-            {% if item.image3 %}
-              <div class="col-4 text-center">
-                <a href="{{ item.image3.url }}" data-lightbox="archive">
-                  {% thumbnail item.image3 "350" as img %}
-                    <img src="{{ img.url }}" alt="Senne Detail Image 3"
-                         class="img-fluid material-card material-card-2">
-                  {% endthumbnail %}
-                </a>
-              </div>
-            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -130,7 +103,7 @@
   {% if user.is_staff %}
     <br>
     <p>
-      <a type="button" class="btn btn-info btn-sm btn-white"
+      <a class="btn btn-info btn-sm btn-white"
          href="{% url "admin:archive_item_change" item.id %}">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         Artikel bearbeiten

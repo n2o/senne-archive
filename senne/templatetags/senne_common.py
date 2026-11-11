@@ -1,96 +1,59 @@
+import markdown as md
 from django import template
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-
-@register.filter(is_safe=True)
-def or_blank(field):
-    """
-    Shows field if not empty
-
-    :param field:
-    :return:
-    """
-    if field:
-        return field
-    else:
-        return ""
+ICONS = {
+    "pdf": "fa-file-pdf-o",
+    "jpg": "fa-picture-o",
+    "jpeg": "fa-picture-o",
+    "png": "fa-picture-o",
+    "doc": "fa-file-word-o",
+    "docx": "fa-file-word-o",
+    "xls": "fa-file-excel-o",
+    "xlsx": "fa-file-excel-o",
+    "zip": "fa-file-archive-o",
+}
 
 
-@register.filter(is_safe=True)
+@register.filter
+def markdown(text):
+    # Only staff edits these fields in the admin, so raw HTML stays allowed (as before).
+    return mark_safe(md.markdown(text or "", extensions=["extra", "sane_lists"]))
+
+
+@register.filter
 def or_blank_with_title(field, title):
-    """
-    Shows field if not empty
-
-    :param field:
-    :return:
-    """
     if field:
-        return "{}: {}<br>".format(title, field)
-    else:
-        return ""
-
-
-@register.filter(is_safe=True)
-def col_if_field_exists(field, name):
-    if field:
-        return """
-            <div class='row'>
-                <div class='col-2'>
-                    {}
-                </div>
-                <div class='col-10'>
-                    {}
-                </div>
-            </div>
-        """.format(name, field)
+        return format_html("{}: {}<br>", title, field)
     return ""
 
 
-@register.filter(is_safe=True)
+@register.filter
 def heading_if_field_exists(field, name):
     if field:
-        return "<h4>{}</h4><p>{}</p>".format(name, field)
+        return format_html("<h2 class='h4'>{}</h2><p>{}</p>", name, field)
     return ""
 
 
-@register.filter(is_safe=True)
+@register.filter
 def paragraph_if_field_exists(field, name):
     if field:
-        return "<p>{}: {}</p>".format(name, field)
+        return format_html("<p>{}: {}</p>", name, field)
     return ""
 
 
-@register.filter(is_safe=True)
+@register.filter
 def extract_filename(file):
-    splitted = file.split("/")[2:]
-    return "/".join(splitted)
+    return file.rsplit("/", 1)[-1]
 
 
-@register.filter(is_safe=True)
-def get_extension(file):
-    return file.split(".")[-1]
-
-
-@register.filter(is_safe=True)
-def fa_attachment(extension):
-    """
-    Add fontawesome icon if found. Else return normal extension as string.
-
-    :param extension: file extension
-    :return: matching fontawesome icon as string
-    """
-    if extension == 'pdf':
-        return "<i class='fa fa-file-pdf-o'></i>"
-    elif extension == 'jpg' or extension == 'png':
-        return "<i class='fa fa-picture-o'></i>"
-    elif extension == 'doc' or extension == 'docx':
-        return "<i class='fa fa-file-word-o'></i>"
-    elif extension == 'xls' or extension == 'xlsx':
-        return "<i class='fa fa-file-excel-o'></i>"
-    elif extension == 'extern':
-        return "<i class='fa fa-external-link'></i>"
-    elif extension == 'zip':
-        return "<i class='fa fa-file-archive-o'></i>"
-    else:
-        return ""
+@register.filter
+def fa_attachment(filename):
+    """Decorative Font Awesome icon for a file name, hidden from screen readers."""
+    icon = ICONS.get(filename.rsplit(".", 1)[-1].lower())
+    if icon:
+        return format_html("<i class='fa {}' aria-hidden='true'></i>", icon)
+    return ""

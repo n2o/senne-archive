@@ -1,13 +1,9 @@
-{% load staticfiles %}
-
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="{% block meta-description %}Digitales Archiv der Naturschutz-Stiftung Senne{% endblock %}">
 
   <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'lightbox2/dist/css/lightbox.min.css' %}">
@@ -35,47 +31,42 @@
   <meta name="msapplication-TileImage" content="{% static 'img/favicons/favicon-144.png' %}">
   <meta name="msapplication-config" content="{% static 'img/favicons/browserconfig.xml' %}">
 
-  <script src="{% static 'jquery/dist/jquery.slim.min.js' %}"></script>
-
   {% block styles %}{% endblock %}
 
-  <title>
-    Naturschutz-Stiftung Senne ::
-    {% block page-title %}{% endblock %}
-  </title>
+  <title>{% block page-title %}{% endblock %} :: Naturschutz-Stiftung Senne</title>
 </head>
 
-<body role="document">
+<body>
 
-<div id="site-header-wrapper" class="text-center">
+<a class="sr-only sr-only-focusable btn btn-primary" href="#content">Zum Inhalt springen</a>
+
+<header id="site-header-wrapper" class="text-center">
   <span id="site-header">
     Senne Archiv der Naturschutz-Stiftung Senne
   </span>
-</div>
+</header>
 
-<nav class="navbar navbar-expand-sm navbar-light">
+<nav class="navbar navbar-expand-sm navbar-light" aria-label="Hauptnavigation">
   <div class="container">
-    <div class=" navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav mx-auto">
-        <a class="nav-item nav-link" href="{% url 'index' %}">
-          Startseite
-        </a>
-        <a class="nav-item nav-link" href="{% url 'archive:index' %}">
-          Hier geht es zum Archiv
-        </a>
-      </div>
+    <div class="navbar-nav mx-auto">
+      <a class="nav-item nav-link" href="{% url 'index' %}"
+         {% if request.resolver_match.view_name == 'index' %}aria-current="page"{% endif %}>
+        Startseite
+      </a>
+      <a class="nav-item nav-link" href="{% url 'archive:index' %}"
+         {% if request.resolver_match.view_name == 'archive:index' %}aria-current="page"{% endif %}>
+        Hier geht es zum Archiv
+      </a>
     </div>
   </div>
 </nav>
 
 <div class="underline"></div>
 
-<div id="content" class="container">
-  <div class="page-header">
-    <h1>{% block page-header %}{% endblock %}</h1>
-  </div>
+<main id="content" class="container">
+  {% block page-header %}{% endblock %}
   {% block content %}{% endblock %}
-</div>
+</main>
 
 <footer>
   <div class="container">
@@ -95,7 +86,7 @@
             {% endif %}
           </a>
           {% if user.is_staff %}
-            <a class="btn btn-link" href="http://docs.sennearchiv.de">
+            <a class="btn btn-link" href="https://docs.sennearchiv.de">
               Dokumentation
             </a>
           {% endif %}
@@ -107,16 +98,12 @@
   </div>
 </footer>
 
-<script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'lightbox2/dist/js/lightbox-plus-jquery.min.js' %}"></script>
-
+<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'lightbox2/dist/js/lightbox.min.js' %}"></script>
 <script>
-    (function ($) {
-        // Disable right click on images
-        $(document).on('contextmenu', 'img', function () {
-            return false;
-        })
-    })(jQuery);
+  // Titles come from data-title; never let lightbox2 insert them as HTML.
+  lightbox.option({sanitizeTitle: true, albumLabel: "Bild %1 von %2"});
 </script>
 
 {% block after_content %}{% endblock %}
