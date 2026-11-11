@@ -21,8 +21,7 @@ ICONS = {
 
 @register.filter
 def markdown(text):
-    # Staff-authored, but not every staff account is a superuser: sanitize so that
-    # Markdown/HTML cannot carry scripts, event handlers or javascript: links.
+    # Staff-authored, but not every staff account is a superuser: strip scripts/handlers/js: links.
     return mark_safe(nh3.clean(md.markdown(text or "", extensions=["extra", "sane_lists"])))
 
 

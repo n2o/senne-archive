@@ -1,6 +1,8 @@
+from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Author, Item
 
@@ -45,3 +47,14 @@ def _query_items(query, author):
 def detail(request, pk):
     item = get_object_or_404(Item.objects.select_related("author"), pk=pk, public=True)
     return render(request, "archive/detail.html", {"item": item})
+
+
+def media(request, name):
+    """Old /media/... links (indexed by Google) → fresh signed S3 URL, for files of public items only."""
+    fields = ("file1", "file2", "file3", "image1", "image2", "image3")
+    match = Q()
+    for field in fields:
+        match |= Q(**{field: name})
+    if not Item.objects.filter(match, public=True).exists():
+        raise Http404
+    return redirect(default_storage.url(name))

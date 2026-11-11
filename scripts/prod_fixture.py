@@ -5,7 +5,7 @@
         -o prod-raw.json
     python3 scripts/prod_fixture.py prod-raw.json prod.json
 
-What it changes (all verified against the 2026-11 production data):
+What it changes:
 - drops rows that point at apps that no longer exist (testy, old flatpages) and revisions left empty by that
 - the custom `pages.page` model is now `django.contrib.flatpages` (its `image` field was never used)
 - Markdown headings of flat pages start at h2 without skipping levels (the page title is the h1)

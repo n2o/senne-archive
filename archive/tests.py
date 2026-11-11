@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.test import TestCase
 
 from archive.models import Author, Item, replace_umlauts
@@ -29,6 +30,19 @@ class ArchiveViewsTest(TestCase):
     def test_hidden_item_detail_is_404(self):
         self.assertEqual(self.get(f"/archiv/{self.hidden.pk}").status_code, 404)
         self.assertEqual(self.get(f"/archiv/{self.public.pk}").status_code, 200)
+
+    def test_old_media_links_redirect_only_for_public_items(self):
+        from django.test import RequestFactory
+
+        from archive.views import media
+
+        Item.objects.filter(pk=self.public.pk).update(file1="archive/x/public.pdf")
+        Item.objects.filter(pk=self.hidden.pk).update(file1="archive/x/hidden.pdf")
+        request = RequestFactory().get("/")
+        self.assertEqual(media(request, "archive/x/public.pdf").status_code, 302)
+        for name in ("archive/x/hidden.pdf", "archive/x/unknown.pdf"):
+            with self.assertRaises(Http404):
+                media(request, name)
 
     def test_garbage_params_do_not_crash(self):
         for query in ("?q=senne&seite=abc", "?q=senne&seite=999", "?autor=xyz", "?autor=99999", "?autor=%C2%B2", "?q="):
