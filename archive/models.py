@@ -98,13 +98,16 @@ class Item(CreatedModifiedModel):
     def __str__(self):
         return str(self.title)
 
+    FILE_FIELDS = ("file1", "file2", "file3")
+    IMAGE_FIELDS = ("image1", "image2", "image3")
+
     @property
     def files(self):
-        return [f for f in (self.file1, self.file2, self.file3) if f]
+        return [f for f in (getattr(self, n) for n in self.FILE_FIELDS) if f]
 
     @property
     def images(self):
-        return [i for i in (self.image1, self.image2, self.image3) if i]
+        return [i for i in (getattr(self, n) for n in self.IMAGE_FIELDS) if i]
 
     class Meta:
         verbose_name = 'Item'

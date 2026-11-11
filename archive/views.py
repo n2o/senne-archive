@@ -51,9 +51,8 @@ def detail(request, pk):
 
 def media(request, name):
     """Old /media/... links (indexed by Google) → fresh signed S3 URL, for files of public items only."""
-    fields = ("file1", "file2", "file3", "image1", "image2", "image3")
     match = Q()
-    for field in fields:
+    for field in Item.FILE_FIELDS + Item.IMAGE_FIELDS:
         match |= Q(**{field: name})
     if not Item.objects.filter(match, public=True).exists():
         raise Http404

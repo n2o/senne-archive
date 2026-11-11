@@ -23,9 +23,11 @@ Konfiguration ausschließlich über Umgebungsvariablen, siehe Kopf von `senne/se
 ## Checks (wie in CI)
 
 ```sh
+npm ci && npm run build
 uv run ruff check .
 uv run python manage.py check --deploy --fail-level WARNING   # braucht einen ≥50 Zeichen langen SECRET_KEY
 uv run python manage.py makemigrations --check --dry-run
+uv run python manage.py collectstatic --noinput                # Tests laufen mit DEBUG=false (Manifest)
 uv run python manage.py test
 ```
 

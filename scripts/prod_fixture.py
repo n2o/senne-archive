@@ -6,7 +6,8 @@
     python3 scripts/prod_fixture.py prod-raw.json prod.json
 
 What it changes:
-- drops rows that point at apps that no longer exist (testy, old flatpages) and revisions left empty by that
+- drops rows that point at apps that no longer exist (testy) and revisions left empty by that,
+  and the Site row (the fresh DB has SITE_ID=1; flat pages are attached to it)
 - the custom `pages.page` model is now `django.contrib.flatpages` (its `image` field was never used)
 - Markdown headings of flat pages start at h2 without skipping levels (the page title is the h1)
 """
@@ -25,10 +26,10 @@ def normalize_headings(text):
         return text
     rank = {level: i + 2 for i, level in enumerate(levels)}
     text = HEADING.sub(lambda m: "#" * rank[len(m.group(1))], text)
-    # Headings before the first h2 would otherwise follow the h1 directly at h3.
-    first_h2 = text.find("\n## ")
-    if first_h2 > 0:
-        text = HEADING.sub("##", text[:first_h2]) + text[first_h2:]
+    # Headings before the first h2 would otherwise follow the page's h1 directly at h3.
+    first_h2 = re.search(r"(?m)^##(?=\s)", text)
+    if first_h2 and first_h2.start() > 0:
+        text = HEADING.sub("##", text[: first_h2.start()]) + text[first_h2.start():]
     return text
 
 
@@ -40,11 +41,12 @@ def convert(objects):
         if o["model"] == "pages.page":
             o["model"] = "flatpages.flatpage"
             o["fields"].pop("image", None)
+            o["fields"]["sites"] = [["example.com"]]  # SITE_ID=1 of the fresh DB
             o["fields"]["content"] = normalize_headings(o["fields"]["content"])
 
     def dead(o):
         ct = o["fields"].get("content_type")
-        return bool(ct) and ct[0] not in APPS
+        return o["model"] == "sites.site" or (bool(ct) and ct[0] not in APPS)
 
     kept_revisions = {o["fields"]["revision"] for o in objects if o["model"] == "reversion.version" and not dead(o)}
     return [
@@ -55,6 +57,8 @@ def convert(objects):
 
 if __name__ == "__main__":
     assert normalize_headings("#### a\n## b\n#### c") == "## a\n## b\n### c"  # the Impressum case
+    assert normalize_headings("# A\n## B\n# C") == "## A\n### B\n## C"
+    assert normalize_headings("## A\n### B\n## C") == "## A\n### B\n## C"
     src, dst = sys.argv[1:3]
     objects = json.load(open(src))
     result = convert(objects)
