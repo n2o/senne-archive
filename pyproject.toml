@@ -15,6 +15,7 @@ dependencies = [
     "psycopg[binary]>=3.3",
     "sorl-thumbnail>=13.4",
     "whitenoise>=6.12",
+    "nh3>=0.3.7",
 ]
 
 [dependency-groups]

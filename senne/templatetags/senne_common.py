@@ -1,4 +1,5 @@
 import markdown as md
+import nh3
 from django import template
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -20,8 +21,9 @@ ICONS = {
 
 @register.filter
 def markdown(text):
-    # Only staff edits these fields in the admin, so raw HTML stays allowed (as before).
-    return mark_safe(md.markdown(text or "", extensions=["extra", "sane_lists"]))
+    # Staff-authored, but not every staff account is a superuser: sanitize so that
+    # Markdown/HTML cannot carry scripts, event handlers or javascript: links.
+    return mark_safe(nh3.clean(md.markdown(text or "", extensions=["extra", "sane_lists"])))
 
 
 @register.filter

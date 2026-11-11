@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from archive.models import Author, Item, replace_umlauts
-from senne.templatetags.senne_common import heading_if_field_exists
+from senne.templatetags.senne_common import heading_if_field_exists, markdown
 
 
 class ReplaceUmlautsTest(TestCase):
@@ -36,6 +36,12 @@ class ArchiveViewsTest(TestCase):
 
     def test_field_values_are_escaped(self):
         self.assertNotIn("<script>", heading_if_field_exists("<script>x</script>", "Abstract"))
+
+    def test_markdown_is_sanitized(self):
+        html = markdown('## Hi\n\n<script>alert(1)</script>[x](javascript:alert(1)){: onclick="alert(1)"}')
+        self.assertIn("<h2>Hi</h2>", html)
+        for bad in ("<script", "javascript:", "onclick"):
+            self.assertNotIn(bad, html)
 
 
 class FlatpageTest(TestCase):
