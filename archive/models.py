@@ -41,7 +41,7 @@ def format_author_name(firstname: str, lastname: str, title: str):
 
 def replace_umlauts(input: str):
     replacements = [("ß", "ss"), ("ü", "ue"), ("ä", "ae"), ("ö", "oe"), ("Ü", "Ue"), ("Ä", "Ae"), ("Ö", "Oe")]
-    for (s, r) in replacements:
+    for s, r in replacements:
         input = input.replace(s, r)
     return input
 
@@ -110,16 +110,21 @@ class Item(CreatedModifiedModel):
         return [i for i in (getattr(self, n) for n in self.IMAGE_FIELDS) if i]
 
     class Meta:
-        verbose_name = 'Item'
-        verbose_name_plural = 'Items'
+        verbose_name = "Item"
+        verbose_name_plural = "Items"
 
 
 class Author(CreatedModifiedModel):
     title = models.CharField("Titel", max_length=256, blank=True, null=True)
     firstname = models.CharField("Vorname", max_length=256, blank=True, null=True)
     lastname = models.CharField("Nachname *", max_length=256, blank=False, null=False)
-    filepath = models.SlugField("Pfad wo die Dateien abgelegt werden (wird automatisch berechnet beim Speichern)",
-                                max_length=255, blank=True, null=True, unique=True)
+    filepath = models.SlugField(
+        "Pfad wo die Dateien abgelegt werden (wird automatisch berechnet beim Speichern)",
+        max_length=255,
+        blank=True,
+        null=True,
+        unique=True,
+    )
 
     def __str__(self):
         return format_author_name(self.firstname, self.lastname, self.title)
@@ -130,5 +135,5 @@ class Author(CreatedModifiedModel):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Autor'
-        verbose_name_plural = 'Autoren'
+        verbose_name = "Autor"
+        verbose_name_plural = "Autoren"

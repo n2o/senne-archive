@@ -29,7 +29,7 @@ def normalize_headings(text):
     # Headings before the first h2 would otherwise follow the page's h1 directly at h3.
     first_h2 = re.search(r"(?m)^##(?=\s)", text)
     if first_h2 and first_h2.start() > 0:
-        text = HEADING.sub("##", text[: first_h2.start()]) + text[first_h2.start():]
+        text = HEADING.sub("##", text[: first_h2.start()]) + text[first_h2.start() :]
     return text
 
 
@@ -50,8 +50,7 @@ def convert(objects):
 
     kept_revisions = {o["fields"]["revision"] for o in objects if o["model"] == "reversion.version" and not dead(o)}
     return [
-        o for o in objects
-        if not dead(o) and not (o["model"] == "reversion.revision" and o["pk"] not in kept_revisions)
+        o for o in objects if not dead(o) and not (o["model"] == "reversion.revision" and o["pk"] not in kept_revisions)
     ]
 
 

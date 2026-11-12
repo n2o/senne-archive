@@ -5,10 +5,12 @@ from senne.models import CreatedModifiedModel
 
 class Frontpage(CreatedModifiedModel):
     image1_leading = models.ImageField("Bild Startseite links groß", upload_to="frontpage/", blank=False, null=True)
-    image2_leading = models.ImageField("Bild Startseite oben rechts klein", upload_to="frontpage/", blank=False,
-                                       null=True)
-    image3_leading = models.ImageField("Bild Startseite unten rechts klein", upload_to="frontpage/", blank=False,
-                                       null=True)
+    image2_leading = models.ImageField(
+        "Bild Startseite oben rechts klein", upload_to="frontpage/", blank=False, null=True
+    )
+    image3_leading = models.ImageField(
+        "Bild Startseite unten rechts klein", upload_to="frontpage/", blank=False, null=True
+    )
 
     block1_title = models.CharField("Block 1 Überschrift", max_length=256, blank=False)
     block1_subtitle = models.CharField("Block 1 Überschrift 2", max_length=256, blank=False)
@@ -29,5 +31,5 @@ class Frontpage(CreatedModifiedModel):
         return "Startseite"
 
     class Meta:
-        verbose_name = 'Startseite'
-        verbose_name_plural = 'Startseiten'
+        verbose_name = "Startseite"
+        verbose_name_plural = "Startseiten"

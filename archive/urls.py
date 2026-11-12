@@ -2,8 +2,8 @@ from django.urls import path
 
 from . import views
 
-app_name = 'archive'
+app_name = "archive"
 urlpatterns = [
-    path('<int:pk>', views.detail, name='details'),
-    path('', views.index, name='index'),
+    path("<int:pk>", views.detail, name="details"),
+    path("", views.index, name="index"),
 ]

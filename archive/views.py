@@ -14,14 +14,18 @@ def index(request):
     author = _author_from_param(request.GET.get("autor"))
     items = _query_items(query, author)
     page = Paginator(items, PAGE_SIZE).get_page(request.GET.get("seite"))
-    return render(request, "archive/index.html", {
-        "items": page,
-        "authors": Author.objects.order_by("lastname", "firstname"),
-        "query": query,
-        "selected_author": author,
-        "searched": bool(query or author),
-        "empty_search": "q" in request.GET and not (query or author),
-    })
+    return render(
+        request,
+        "archive/index.html",
+        {
+            "items": page,
+            "authors": Author.objects.order_by("lastname", "firstname"),
+            "query": query,
+            "selected_author": author,
+            "searched": bool(query or author),
+            "empty_search": "q" in request.GET and not (query or author),
+        },
+    )
 
 
 def _author_from_param(value):
@@ -36,8 +40,10 @@ def _query_items(query, author):
     items = Item.objects.filter(public=True).select_related("author").order_by("title", "pk")
     if query:
         items = items.filter(
-            Q(title__icontains=query) | Q(abstract__icontains=query)
-            | Q(notes__icontains=query) | Q(keywords__icontains=query)
+            Q(title__icontains=query)
+            | Q(abstract__icontains=query)
+            | Q(notes__icontains=query)
+            | Q(keywords__icontains=query)
         )
     if author:
         items = items.filter(author=author)

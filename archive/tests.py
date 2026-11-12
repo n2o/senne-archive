@@ -61,6 +61,7 @@ class ArchiveViewsTest(TestCase):
 class FlatpageTest(TestCase):
     def test_impressum_renders_markdown(self):
         from django.contrib.flatpages.models import FlatPage
+
         page = FlatPage.objects.create(url="/impressum/", title="Impressum", content="## Angaben")
         page.sites.add(1)
         response = self.client.get("/impressum/", secure=True)

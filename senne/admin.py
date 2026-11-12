@@ -6,9 +6,7 @@ from pagedown.widgets import AdminPagedownWidget
 
 
 class PageDownAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': AdminPagedownWidget}
-    }
+    formfield_overrides = {models.TextField: {"widget": AdminPagedownWidget}}
 
 
 admin.site.unregister(FlatPage)
