@@ -9,16 +9,7 @@ from senne.models import CreatedModifiedModel
 
 
 def construct_file_path(instance, filename: str) -> str:
-    """
-    Construct directory structure based on the general path and the author.
-
-    Returns upload_to/lastname, firstname/ when the author is written as "lastname, firstname".
-
-    :param instance: Item object
-    :param filename: original filename
-    :return: Constructed path for file
-    :rtype: str
-    """
+    """archive/<author slug>/<filename>, or archive/ohne-autor/<filename> without an author."""
     author_dir = instance.author.filepath if instance.author else "ohne-autor"
     return os.path.join("archive", author_dir, filename)
 
@@ -47,8 +38,6 @@ def replace_umlauts(input: str):
 
 
 class Item(CreatedModifiedModel):
-    upload_to = "archive/"
-
     medart_choices = (
         ("Artikel", "Artikel"),
         ("Audiodatei", "Audiodatei"),
