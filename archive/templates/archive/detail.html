@@ -2,7 +2,7 @@
 {% load senne_common sorl_thumbnail %}
 
 {% block page-title %}{{ item.title }}{% endblock %}
-{% block meta-description %}{{ item.medart }}{% if item.year %} aus dem Jahr {{ item.year }}{% endif %}{% if item.author %} von {{ item.author }}{% endif %} im Senne-Archiv: {{ item.abstract|default:item.title|truncatechars:140 }}{% endblock %}
+{% block meta-description %}{{ item.medart }}{% if item.dated_year %} aus dem Jahr {{ item.dated_year }}{% endif %}{% if item.author %} von {{ item.author }}{% endif %} im Senne-Archiv: {{ item.abstract|default:item.title|truncatechars:140 }}{% endblock %}
 
 {% block content %}
 <article class="beleg">
@@ -16,7 +16,7 @@
 
   <dl class="label">
     {% if item.author %}<div><dt>Autor</dt><dd><a href="{% url 'archive:index' %}?autor={{ item.author.pk }}">{{ item.author }}</a></dd></div>{% endif %}
-    {% if item.year %}<div><dt>Jahr</dt><dd class="anno">anno {{ item.year }}</dd></div>{% endif %}
+    {% if item.dated_year %}<div><dt>Jahr</dt><dd class="anno">anno {{ item.dated_year }}</dd></div>{% endif %}
     <div><dt>Art</dt><dd>{{ item.medart }}</dd></div>
     {% if item.source_title %}<div><dt>Quelle</dt><dd>{{ item.source_title }}</dd></div>{% endif %}
     {% if item.place %}<div><dt>Ort / Veröffentlichung</dt><dd>{{ item.place }}</dd></div>{% endif %}

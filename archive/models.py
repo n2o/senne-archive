@@ -1,8 +1,9 @@
 import os
 from functools import cached_property
 
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import CASCADE, Count, F
+from django.db.models import CASCADE, Case, Count, F, IntegerField, Q, Value, When
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -20,11 +21,15 @@ def current_year() -> int:
 
 
 NO_YEAR = "ohne"
+YEARS = (1000, 2100)  # anything outside is a typo in the data and counts as "ohne Jahr"
+DATED = Q(year__gte=YEARS[0], year__lte=YEARS[1])
 
 
 def decade_value(year: int | None) -> str:
-    """1958 -> '1950', None -> NO_YEAR; the value of the ?jahrzehnt= filter."""
-    return NO_YEAR if year is None else str(year // 10 * 10)
+    """1958 -> '1950', None or a typo like 19855 -> NO_YEAR; the value of the ?jahrzehnt= filter."""
+    if year is None or not YEARS[0] <= year <= YEARS[1]:
+        return NO_YEAR
+    return str(year // 10 * 10)
 
 
 def decade_label(value: str) -> str:
@@ -35,9 +40,22 @@ def decade_label(value: str) -> str:
 class ItemQuerySet(models.QuerySet):
     def decades(self):
         """[(value, label, count)] in order, items without a year last; counted by the database."""
-        rows = self.order_by().annotate(d=F("year") / 10 * 10).values_list("d").annotate(n=Count("pk"))
+        decade = Case(When(DATED, then=F("year") / 10 * 10), output_field=IntegerField())
+        rows = self.order_by().annotate(d=decade).values_list("d").annotate(n=Count("pk"))
         values = [(decade_value(d), n) for d, n in sorted(rows, key=lambda r: (r[0] is None, r[0] or 0))]
         return [(value, decade_label(value), n) for value, n in values]
+
+    def in_decade(self, value):
+        if value == NO_YEAR:
+            return self.exclude(DATED)
+        if value:
+            return self.filter(DATED, year__gte=int(value), year__lt=int(value) + 10)
+        return self
+
+    def chronological(self):
+        """Oldest first; items without a (plausible) year last."""
+        undated = Case(When(DATED, then=Value(0)), default=Value(1))
+        return self.order_by(undated, "year", "title", "pk")
 
     def medarts(self):
         """[(medart, count)], most frequent first."""
@@ -90,7 +108,13 @@ class Item(CreatedModifiedModel):
     medart = models.CharField("Medienart *", max_length=256, choices=medart_choices, blank=False)
     source_title = models.CharField("Quelltitel", max_length=1024, blank=True, null=True)
     abstract = models.TextField("Abstract", blank=True, null=True)
-    year = models.IntegerField("Jahrgang", default=current_year, blank=True, null=True)
+    year = models.IntegerField(
+        "Jahrgang",
+        default=current_year,
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(YEARS[0]), MaxValueValidator(YEARS[1])],
+    )
     pages = models.CharField("Seiten", max_length=256, blank=True, null=True)
     notes = models.TextField("Anmerkungen", blank=True, null=True)
     place = models.CharField("Ort / Veröffentlichung", max_length=256, blank=True, null=True)
@@ -130,6 +154,11 @@ class Item(CreatedModifiedModel):
     def number(self):
         """Inventory label shown on the archive's voucher sheets."""
         return f"SA-{self.pk:04d}"
+
+    @property
+    def dated_year(self):
+        """The year, or None when it is missing or a typo outside YEARS."""
+        return None if decade_value(self.year) == NO_YEAR else self.year
 
     @property
     def decade(self):

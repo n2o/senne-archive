@@ -2,13 +2,13 @@ from urllib.parse import urlsplit
 
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
-from django.db.models import F, Q
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from .models import NO_YEAR, Author, Item, decade_label
+from .models import Author, Item, decade_label
 
 PAGE_SIZE = 20
 
@@ -23,7 +23,7 @@ def index(request):
     decade = _pick(request, "jahrzehnt", [value for value, _, _ in decades])
     medart = _pick(request, "art", [value for value, _ in medarts])
     # Each facet counts within the other facet's filter, so a count always matches the list it leads to.
-    by_decade = _in_decade(items, decade)
+    by_decade = items.in_decade(decade)
     by_medart = items.filter(medart=medart) if medart else items
     if medart:
         decades = by_medart.decades()
@@ -49,14 +49,6 @@ def index(request):
     )
 
 
-def _in_decade(items, decade):
-    if decade == NO_YEAR:
-        return items.filter(year__isnull=True)
-    if decade:
-        return items.filter(year__gte=int(decade), year__lt=int(decade) + 10)
-    return items
-
-
 def _pick(request, param, allowed):
     """The parameter's value if it is one of the offered facet values, else ''."""
     value = request.GET.get(param, "")
@@ -70,11 +62,7 @@ def _author_from_param(value):
 
 
 def _search(query, author):
-    items = (
-        Item.objects.filter(public=True)
-        .select_related("author")
-        .order_by(F("year").asc(nulls_last=True), "title", "pk")
-    )
+    items = Item.objects.filter(public=True).select_related("author").chronological()
     if query:
         items = items.filter(
             Q(title__icontains=query)
