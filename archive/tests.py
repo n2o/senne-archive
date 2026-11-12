@@ -2,7 +2,7 @@ from django.http import Http404
 from django.test import TestCase
 
 from archive.models import Author, Item, replace_umlauts
-from senne.templatetags.senne_common import heading_if_field_exists, markdown
+from senne.templatetags.senne_common import file_kind, markdown
 
 
 class ReplaceUmlautsTest(TestCase):
@@ -27,6 +27,32 @@ class ArchiveViewsTest(TestCase):
         self.assertContains(response, "Senne Heide")
         self.assertNotContains(response, "Senne intern")
 
+    def test_archive_can_be_browsed_and_filtered(self):
+        Item.objects.create(title="Dünen", medart="Foto(s)", year=1958, author=self.public.author)
+        Item.objects.filter(pk=self.public.pk).update(year=1980)
+        response = self.get("/archiv/")
+        self.assertContains(response, "Senne Heide")
+        self.assertContains(response, "Dünen")
+        self.assertContains(response, "2 Belege")
+        response = self.get("/archiv/?jahrzehnt=1950")
+        self.assertContains(response, "Dünen")
+        self.assertNotContains(response, "Senne Heide")
+        response = self.get("/archiv/?art=Buch")
+        self.assertContains(response, "Senne Heide")
+        self.assertNotContains(response, "Dünen")
+        # With a media type chosen, the decade counts only count that media type.
+        response = self.get("/archiv/?art=Buch")
+        self.assertEqual(response.context["decades"], [("1980", "1980er", 1)])
+        # Unknown facet values are ignored instead of filtering everything away.
+        self.assertContains(self.get("/archiv/?jahrzehnt=1&art=Unsinn"), "2 Belege")
+
+    def test_detail_links_back_to_the_results_it_came_from(self):
+        url = f"/archiv/{self.public.pk}"
+        response = self.client.get(url, secure=True, HTTP_REFERER="https://testserver/archiv/?q=heide")
+        self.assertContains(response, 'href="/archiv/?q=heide"')
+        response = self.client.get(url, secure=True, HTTP_REFERER="https://evil.example/archiv/?q=x")
+        self.assertContains(response, 'href="/archiv/">Zum Archiv')
+
     def test_hidden_item_detail_is_404(self):
         self.assertEqual(self.get(f"/archiv/{self.hidden.pk}").status_code, 404)
         self.assertEqual(self.get(f"/archiv/{self.public.pk}").status_code, 200)
@@ -49,7 +75,14 @@ class ArchiveViewsTest(TestCase):
             self.assertEqual(self.get(f"/archiv/{query}").status_code, 200, query)
 
     def test_field_values_are_escaped(self):
-        self.assertNotIn("<script>", heading_if_field_exists("<script>x</script>", "Abstract"))
+        Item.objects.filter(pk=self.public.pk).update(abstract="<script>x</script>")
+        response = self.get(f"/archiv/{self.public.pk}")
+        self.assertNotContains(response, "<script>x")
+        self.assertContains(response, "&lt;script&gt;x")
+
+    def test_file_kind(self):
+        self.assertEqual(file_kind("archive/a/Bericht.pdf"), "PDF")
+        self.assertEqual(file_kind("archive/a/ohne-endung"), "Datei")
 
     def test_markdown_is_sanitized(self):
         html = markdown('## Hi\n\n<script>alert(1)</script>[x](javascript:alert(1)){: onclick="alert(1)"}')

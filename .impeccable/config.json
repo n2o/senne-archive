@@ -1,0 +1,62 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "senne/templates/base.html"
+        ],
+        "createdAt": "2026-11-12T15:39:20.886Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "archive/templates/archive/_stamps.html"
+        ],
+        "createdAt": "2026-11-12T15:39:20.912Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "archive/templates/archive/detail.html"
+        ],
+        "createdAt": "2026-11-12T15:39:20.937Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "archive/templates/archive/index.html"
+        ],
+        "createdAt": "2026-11-12T15:39:20.961Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "frontpage/templates/frontpage/index.html"
+        ],
+        "createdAt": "2026-11-12T15:39:20.986Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgb(0, 0, 0)",
+        "files": [
+          "templates/flatpages/default.html"
+        ],
+        "createdAt": "2026-11-12T15:39:21.011Z",
+        "reason": "Claude: static template scan without site.css sees UA black; rendered text color is var(--ink) #1d1f1c (axe/screenshots)"
+      }
+    ]
+  }
+}

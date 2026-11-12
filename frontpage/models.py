@@ -30,6 +30,24 @@ class Frontpage(CreatedModifiedModel):
     def __str__(self):
         return "Startseite"
 
+    @property
+    def secondary_images(self):
+        return [i for i in (self.image2_leading, self.image3_leading) if i]
+
+    @property
+    def blocks(self):
+        """The three editorial blocks, skipping empty ones."""
+        return [
+            {
+                "title": getattr(self, f"block{n}_title"),
+                "subtitle": getattr(self, f"block{n}_subtitle"),
+                "content": getattr(self, f"block{n}_content"),
+                "image": getattr(self, f"block{n}_image"),
+            }
+            for n in (1, 2, 3)
+            if getattr(self, f"block{n}_title")
+        ]
+
     class Meta:
         verbose_name = "Startseite"
         verbose_name_plural = "Startseiten"

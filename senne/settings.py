@@ -70,6 +70,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "senne.context_processors.search",
             ],
         },
     },
@@ -101,9 +102,7 @@ SITE_ID = 1
 # Static files: built into the image (collectstatic) and served by WhiteNoise.
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
-# Only the dist folders of the npm packages, under their usual paths.
-NPM_DIRS = ("bootstrap/dist", "jquery/dist", "lightbox2/dist", "select2/dist", "font-awesome/css", "font-awesome/fonts")
-STATICFILES_DIRS = [(d, BASE_DIR / "node_modules" / d) for d in NPM_DIRS] + [BASE_DIR / "senne/templates/assets"]
+STATICFILES_DIRS = [BASE_DIR / "senne/templates/assets"]
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 # Media: private S3 bucket, files are delivered through short-lived signed URLs.

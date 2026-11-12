@@ -1,7 +1,8 @@
 import os
+from functools import cached_property
 
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Count, F
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -16,6 +17,31 @@ def construct_file_path(instance, filename: str) -> str:
 
 def current_year() -> int:
     return timezone.now().year
+
+
+NO_YEAR = "ohne"
+
+
+def decade_value(year: int | None) -> str:
+    """1958 -> '1950', None -> NO_YEAR; the value of the ?jahrzehnt= filter."""
+    return NO_YEAR if year is None else str(year // 10 * 10)
+
+
+def decade_label(value: str) -> str:
+    """'1950' -> '1950er', NO_YEAR -> 'ohne Jahr'."""
+    return "ohne Jahr" if value == NO_YEAR else f"{value}er"
+
+
+class ItemQuerySet(models.QuerySet):
+    def decades(self):
+        """[(value, label, count)] in order, items without a year last; counted by the database."""
+        rows = self.order_by().annotate(d=F("year") / 10 * 10).values_list("d").annotate(n=Count("pk"))
+        values = [(decade_value(d), n) for d, n in sorted(rows, key=lambda r: (r[0] is None, r[0] or 0))]
+        return [(value, decade_label(value), n) for value, n in values]
+
+    def medarts(self):
+        """[(medart, count)], most frequent first."""
+        return list(self.order_by().values_list("medart").annotate(n=Count("pk")).order_by("-n", "medart"))
 
 
 def slugify_author(lastname: str, firstname: str | None = None, title: str | None = None) -> str:
@@ -84,19 +110,30 @@ class Item(CreatedModifiedModel):
     image2 = models.ImageField("2. Abbildung", upload_to=construct_file_path, max_length=255, blank=True, null=True)
     image3 = models.ImageField("3. Abbildung", upload_to=construct_file_path, max_length=255, blank=True, null=True)
 
+    objects = ItemQuerySet.as_manager()
+
     def __str__(self):
         return str(self.title)
 
     FILE_FIELDS = ("file1", "file2", "file3")
     IMAGE_FIELDS = ("image1", "image2", "image3")
 
-    @property
+    @cached_property
     def files(self):
         return [f for f in (getattr(self, n) for n in self.FILE_FIELDS) if f]
 
-    @property
+    @cached_property
     def images(self):
         return [i for i in (getattr(self, n) for n in self.IMAGE_FIELDS) if i]
+
+    @property
+    def number(self):
+        """Inventory label shown on the archive's voucher sheets."""
+        return f"SA-{self.pk:04d}"
+
+    @property
+    def decade(self):
+        return decade_label(decade_value(self.year))
 
     class Meta:
         verbose_name = "Item"

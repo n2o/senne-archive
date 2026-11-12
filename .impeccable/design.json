@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-12T00:00:00Z",
+  "title": "Design System: Senne-Archiv",
+  "extensions": {
+    "colorMeta": {
+      "folder": {
+        "role": "primary",
+        "displayName": "Stiftungsgrün / Mappengrün",
+        "canonical": "oklch(47.2% 0.112 149)",
+        "tonalRamp": [
+          "oklch(15% 0.056 149)",
+          "oklch(25% 0.084 149)",
+          "oklch(35% 0.101 149)",
+          "oklch(45% 0.112 149)",
+          "oklch(55% 0.112 149)",
+          "oklch(70% 0.09 149)",
+          "oklch(85% 0.056 149)",
+          "oklch(95% 0.028 149)"
+        ]
+      },
+      "folder-dark": {
+        "role": "primary",
+        "displayName": "Mappenkante",
+        "canonical": "oklch(41.5% 0.098 149)",
+        "tonalRamp": [
+          "oklch(15% 0.049 149)",
+          "oklch(25% 0.074 149)",
+          "oklch(35% 0.088 149)",
+          "oklch(45% 0.098 149)",
+          "oklch(55% 0.098 149)",
+          "oklch(70% 0.078 149)",
+          "oklch(85% 0.049 149)",
+          "oklch(95% 0.025 149)"
+        ]
+      },
+      "folder-text": {
+        "role": "primary",
+        "displayName": "Mappen-Hellgrün",
+        "canonical": "oklch(94% 0.018 151)",
+        "tonalRamp": [
+          "oklch(15% 0.02 151)",
+          "oklch(25% 0.03 151)",
+          "oklch(35% 0.036 151)",
+          "oklch(45% 0.04 151)",
+          "oklch(55% 0.04 151)",
+          "oklch(70% 0.032 151)",
+          "oklch(85% 0.02 151)",
+          "oklch(95% 0.01 151)"
+        ]
+      },
+      "stamp": {
+        "role": "secondary",
+        "displayName": "Stempel-Pflaume",
+        "canonical": "oklch(42.2% 0.115 351)",
+        "tonalRamp": [
+          "oklch(15% 0.058 351)",
+          "oklch(25% 0.086 351)",
+          "oklch(35% 0.104 351)",
+          "oklch(45% 0.115 351)",
+          "oklch(55% 0.115 351)",
+          "oklch(70% 0.092 351)",
+          "oklch(85% 0.058 351)",
+          "oklch(95% 0.029 351)"
+        ]
+      },
+      "tape": {
+        "role": "tertiary",
+        "displayName": "Leinenband",
+        "canonical": "oklch(84.8% 0.04 88)",
+        "tonalRamp": [
+          "oklch(15% 0.02 88)",
+          "oklch(25% 0.03 88)",
+          "oklch(35% 0.036 88)",
+          "oklch(45% 0.04 88)",
+          "oklch(55% 0.04 88)",
+          "oklch(70% 0.032 88)",
+          "oklch(85% 0.02 88)",
+          "oklch(95% 0.01 88)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Belegbogen",
+        "canonical": "oklch(95.9% 0.008 107)",
+        "tonalRamp": [
+          "oklch(15% 0.006 107)",
+          "oklch(25% 0.009 107)",
+          "oklch(35% 0.011 107)",
+          "oklch(45% 0.012 107)",
+          "oklch(55% 0.012 107)",
+          "oklch(70% 0.01 107)",
+          "oklch(85% 0.006 107)",
+          "oklch(95% 0.003 107)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Etiketttinte",
+        "canonical": "oklch(23.6% 0.006 135)",
+        "tonalRamp": [
+          "oklch(15% 0.004 135)",
+          "oklch(25% 0.006 135)",
+          "oklch(35% 0.007 135)",
+          "oklch(45% 0.008 135)",
+          "oklch(55% 0.008 135)",
+          "oklch(70% 0.006 135)",
+          "oklch(85% 0.004 135)",
+          "oklch(95% 0.002 135)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Bleistiftgrau",
+        "canonical": "oklch(41.5% 0.011 129)",
+        "tonalRamp": [
+          "oklch(15% 0.005 129)",
+          "oklch(25% 0.008 129)",
+          "oklch(35% 0.01 129)",
+          "oklch(45% 0.011 129)",
+          "oklch(55% 0.011 129)",
+          "oklch(70% 0.009 129)",
+          "oklch(85% 0.005 129)",
+          "oklch(95% 0.003 129)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Etikettlinie",
+        "canonical": "oklch(81.7% 0.016 107)",
+        "tonalRamp": [
+          "oklch(15% 0.008 107)",
+          "oklch(25% 0.012 107)",
+          "oklch(35% 0.014 107)",
+          "oklch(45% 0.016 107)",
+          "oklch(55% 0.016 107)",
+          "oklch(70% 0.013 107)",
+          "oklch(85% 0.008 107)",
+          "oklch(95% 0.004 107)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Weiß",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(25% 0.0 0)",
+          "oklch(35% 0.0 0)",
+          "oklch(45% 0 0)",
+          "oklch(55% 0 0)",
+          "oklch(70% 0.0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Startseiten-Titel, einmal pro Seite."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Belegtitel der Detailseite, Flatpage- und Blocktitel."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Abschnitte der Detailseite."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Belegtitel im Streifen der Trefferliste."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Einleitungssätze, max. 36em."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Fließtext mit Versalziffern, Prosa max. 68ch."
+      },
+      "small-caps": {
+        "displayName": "Small Caps",
+        "purpose": "Stempel, Facetten- und Listenköpfe."
+      },
+      "plate": {
+        "displayName": "Plate",
+        "purpose": "Inventarnummer SA-0000 in der Randspalte."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono-Feldnamen, Suchbeschriftungen, Zähler."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Navigation, Knöpfe, Aktionen in Public Sans."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Einzige Kurve; Einblendung des Bildbetrachters."
+      },
+      {
+        "name": "viewer-in",
+        "value": "0.35s var(--ease); from { opacity: 0; transform: scale(0.97) }",
+        "purpose": "Öffnen des <dialog>-Bildbetrachters; bei prefers-reduced-motion: reduce ohne Animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "max-width: 40rem"
+      },
+      {
+        "name": "narrow",
+        "value": "max-width: 60rem"
+      },
+      {
+        "name": "wide",
+        "value": "min-width: 60.0625rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Mappenkopf",
+      "kind": "nav",
+      "refersTo": "folder-cover",
+      "description": "Grüner Kopf mit Logo unter Leinenband, Name und Hauptnavigation.",
+      "html": "<header class=\"ds-folder\"><span class=\"ds-mount\">NSS</span><div><p class=\"ds-name\">Senne-Archiv <span>· Naturschutz-Stiftung Senne</span></p><nav class=\"ds-nav\"><a href=\"#\">Startseite</a><a href=\"#\" aria-current=\"page\">Archiv</a></nav></div></header>",
+      "css": ".ds-folder{display:grid;grid-template-columns:auto 1fr;gap:1.25rem var(--gutter,1.5rem);padding:1.25rem var(--gutter,1.5rem) 1.75rem;background:var(--folder,#226c36);border-bottom:7px solid var(--folder-dark,#1b5a2c);color:#fff;font-family:var(--serif,Spectral,Georgia,serif)}.ds-mount{position:relative;display:grid;place-items:center;width:7rem;height:4.8rem;background:var(--sheet,#f2f2ec);color:var(--folder,#226c36);font-weight:600}.ds-mount::before,.ds-mount::after{content:\"\";position:absolute;width:2.9rem;height:.95rem;background:var(--tape,#d8ccb0)}.ds-mount::before{top:-.6rem;right:-.8rem;transform:rotate(8deg)}.ds-mount::after{bottom:-.4rem;left:-.75rem;transform:rotate(-6deg)}.ds-name{font-size:1.5rem;font-weight:600;line-height:1.2;margin:0}.ds-name span{font-weight:400}.ds-nav{display:flex;gap:1.75rem;margin-top:.75rem;font:600 1.0625rem/1 var(--sans,\"Public Sans\",system-ui,sans-serif)}.ds-nav a{color:inherit;text-decoration:none;padding:.5rem 0;border-bottom:2px solid transparent}.ds-nav a:hover,.ds-nav a[aria-current]{border-bottom-color:#fff}.ds-nav a:focus-visible{outline:3px solid #fff;outline-offset:3px}"
+    },
+    {
+      "name": "Suchfeld",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Stichwortfeld auf Bogengrund in der grünen Mappe, Mono-Beschriftung darüber.",
+      "html": "<div class=\"ds-search-bg\"><label class=\"ds-search-label\">Stichwort<input class=\"ds-search-input\" type=\"search\" placeholder=\"z. B. Heide, Lutter, Hövelhof\"></label></div>",
+      "css": ".ds-search-bg{background:var(--folder,#226c36);padding:1rem}.ds-search-label{display:grid;gap:.4rem;font:500 .8125rem/1 var(--mono,\"IBM Plex Mono\",ui-monospace,monospace);color:var(--folder-text,#e3efe5)}.ds-search-input{height:3rem;border:0;border-radius:2px;padding:0 .875rem;font:400 1.0625rem/1 var(--sans,\"Public Sans\",system-ui,sans-serif);color:var(--ink,#1d1f1c);background:var(--sheet,#f2f2ec)}.ds-search-input::placeholder{color:var(--soft,#4a4d47)}.ds-search-input:focus-visible{outline:3px solid #fff;outline-offset:3px}"
+    },
+    {
+      "name": "Suchknopf",
+      "kind": "button",
+      "refersTo": "button-search",
+      "description": "Einziger gefüllter Knopf: Tinte mit weißer Grotesk.",
+      "html": "<button class=\"ds-btn-search\">Suchen</button>",
+      "css": ".ds-btn-search{height:3rem;padding:0 1.75rem;border:0;border-radius:2px;background:var(--ink,#1d1f1c);color:#fff;font:600 1.0625rem/1 var(--sans,\"Public Sans\",system-ui,sans-serif);cursor:pointer}.ds-btn-search:hover{background:var(--folder-dark,#1b5a2c)}.ds-btn-search:focus-visible{outline:3px solid var(--stamp,#7a2e55);outline-offset:3px}"
+    },
+    {
+      "name": "Stempel",
+      "kind": "chip",
+      "refersTo": "stamp",
+      "description": "Zustand als Stempelform: Doppelrahmen Datei, rund Abbildungen, asymmetrisch online, gestrichelt nur analog.",
+      "html": "<p class=\"ds-stamps\"><span class=\"ds-stamp ds-doc\">PDF</span><span class=\"ds-stamp ds-fig\">3 Abb.</span><span class=\"ds-stamp ds-web\">online</span><span class=\"ds-stamp ds-analog\">nur analog</span></p>",
+      "css": ".ds-stamps{display:flex;flex-wrap:wrap;gap:.6rem}.ds-stamp{display:inline-block;padding:.3rem .6rem .35rem;font:600 .9375rem/1 var(--sc,\"Spectral SC\",Spectral,Georgia,serif);letter-spacing:.06em;color:var(--stamp,#7a2e55);white-space:nowrap;transform:rotate(var(--angle))}.ds-doc{--angle:-3deg;border:3px double var(--stamp,#7a2e55)}.ds-fig{--angle:2.5deg;border:2px solid var(--stamp,#7a2e55);border-radius:999px}.ds-web{--angle:-1.5deg;border:2px solid var(--stamp,#7a2e55);border-radius:.5rem .15rem}.ds-analog{--angle:-1.5deg;border:2px dashed var(--stamp,#7a2e55)}"
+    },
+    {
+      "name": "Belegstreifen",
+      "kind": "card",
+      "refersTo": "bandmark",
+      "description": "Eintrag der Trefferliste: Jahrzehnt-Marke, Inventarnummer, Titel, Etikettzeile, Stempel; neue Mappe mit 2px Grün.",
+      "html": "<article class=\"ds-strip\"><p class=\"ds-band\">1980er</p><p class=\"ds-plate\">SA-0001</p><div><h2 class=\"ds-title\"><a href=\"#\">Die Lutter und ihre Quellen</a></h2><p class=\"ds-fields\"><span><i>Autor</i>Kröger, Wilhelm</span><span><i>Jahr</i>anno 1953</span><span><i>Art</i>Buch</span></p></div><p><span class=\"ds-stamp-doc\">PDF</span></p></article>",
+      "css": ".ds-strip{display:grid;grid-template-columns:5rem 5.75rem 1fr auto;gap:0 1rem;align-items:start;padding:.75rem 0;border-top:2px solid var(--folder,#226c36);background:var(--sheet,#f2f2ec);color:var(--ink,#1d1f1c);font-family:var(--serif,Spectral,Georgia,serif)}.ds-strip p{margin:0}.ds-band{justify-self:start;padding:.2rem .55rem .25rem;border-radius:2px;background:var(--folder,#226c36);color:#fff;font-size:.9375rem;font-weight:600}.ds-plate{padding-top:.35rem;font:500 .875rem/1.2 var(--mono,\"IBM Plex Mono\",ui-monospace,monospace);letter-spacing:.02em;color:var(--soft,#4a4d47)}.ds-title{margin:0;font-size:1.25rem;font-weight:500;line-height:1.3}.ds-title a{color:var(--folder,#226c36);text-decoration:none}.ds-title a:hover{text-decoration:underline}.ds-title a:focus-visible{outline:3px solid var(--stamp,#7a2e55);outline-offset:3px}.ds-fields{display:flex;flex-wrap:wrap;gap:.25rem 1.375rem;margin-top:.3rem}.ds-fields>span{border-bottom:1px solid var(--rule,#c4c4b8);padding-right:.25rem}.ds-fields i{margin-right:.45rem;font:normal 400 .8125rem/1 var(--mono,\"IBM Plex Mono\",ui-monospace,monospace);color:var(--soft,#4a4d47)}.ds-stamp-doc{display:inline-block;padding:.3rem .6rem .35rem;border:3px double var(--stamp,#7a2e55);color:var(--stamp,#7a2e55);font:600 .9375rem/1 var(--sc,\"Spectral SC\",Spectral,Georgia,serif);letter-spacing:.06em;transform:rotate(-3deg)}"
+    },
+    {
+      "name": "Jahrzehnt-Chip",
+      "kind": "chip",
+      "refersTo": "decade-chip",
+      "description": "Stöbern nach Jahrzehnt auf der Startseite; Hover füllt mit Mappengrün.",
+      "html": "<a class=\"ds-decade\" href=\"#\">1970er <span>5</span></a>",
+      "css": ".ds-decade{display:inline-flex;gap:.5rem;align-items:baseline;min-height:2.75rem;padding:.55rem .9rem;border:1px solid var(--ink,#1d1f1c);border-radius:2px;color:var(--ink,#1d1f1c);text-decoration:none;font:500 1.0625rem/1.55 var(--serif,Spectral,Georgia,serif)}.ds-decade span{font:400 .8125rem/1 var(--mono,\"IBM Plex Mono\",ui-monospace,monospace);color:var(--soft,#4a4d47)}.ds-decade:hover{background:var(--folder,#226c36);border-color:var(--folder,#226c36);color:#fff}.ds-decade:hover span{color:var(--folder-text,#e3efe5)}.ds-decade:focus-visible{outline:3px solid var(--stamp,#7a2e55);outline-offset:3px}"
+    },
+    {
+      "name": "Dokumentzeile",
+      "kind": "custom",
+      "refersTo": "stamp",
+      "description": "Der Weg zur Datei: Stempel, Dateiname, Aktion öffnen; 1px Tintenlinie.",
+      "html": "<a class=\"ds-doclink\" href=\"#\"><span class=\"ds-doclink-stamp\">PDF</span><span class=\"ds-doclink-name\">Bericht_Lutter.pdf</span><span class=\"ds-doclink-action\">öffnen</span></a>",
+      "css": ".ds-doclink{display:grid;grid-template-columns:5.5rem 1fr auto;gap:1.25rem;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--ink,#1d1f1c);color:var(--ink,#1d1f1c);text-decoration:none;font-family:var(--serif,Spectral,Georgia,serif)}.ds-doclink-stamp{justify-self:start;padding:.3rem .6rem .35rem;border:3px double var(--stamp,#7a2e55);color:var(--stamp,#7a2e55);font:600 1.25rem/1 var(--sc,\"Spectral SC\",Spectral,Georgia,serif);letter-spacing:.06em;transform:rotate(-3deg)}.ds-doclink-action{font:600 1.0625rem/1 var(--sans,\"Public Sans\",system-ui,sans-serif);color:var(--folder,#226c36)}.ds-doclink:hover .ds-doclink-name,.ds-doclink:hover .ds-doclink-action{text-decoration:underline}.ds-doclink:focus-visible{outline:3px solid var(--stamp,#7a2e55);outline-offset:3px}"
+    },
+    {
+      "name": "Seitenzahlen",
+      "kind": "nav",
+      "refersTo": "page-link",
+      "description": "Blättern: 2.75rem Quadrate, aktuelle Seite grün gefüllt.",
+      "html": "<nav class=\"ds-pages\"><span aria-current=\"page\">1</span><a href=\"#\">2</a><a href=\"#\">Weiter</a></nav>",
+      "css": ".ds-pages{display:flex;gap:.4rem;font:400 1rem/1 var(--sans,\"Public Sans\",system-ui,sans-serif)}.ds-pages a,.ds-pages span{min-width:2.75rem;min-height:2.75rem;display:inline-grid;place-items:center;padding:0 .6rem}.ds-pages a{color:var(--folder,#226c36);border:1px solid var(--rule,#c4c4b8);text-decoration:none}.ds-pages a:hover{border-color:var(--folder,#226c36)}.ds-pages a:focus-visible{outline:3px solid var(--stamp,#7a2e55);outline-offset:3px}.ds-pages [aria-current]{background:var(--folder,#226c36);color:#fff;font-weight:600}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Die Herbarsammlung",
+    "overview": "Das Archiv ist eine Herbarsammlung: Jeder Eintrag ist ein Beleg auf einem kühlen Bogen, mit Etikett, Inventarnummer in der Randspalte und Eingangsstempel; das Archiv als Ganzes ist eine Folge grüner Gattungsmappen, eine pro Jahrzehnt. Der Mappenkopf in Stiftungsgrün trägt das Logo wie ein aufgeklebtes Präparat unter zwei Streifen Leinenband.\n\nDie Dichte ist die einer Sammlungsliste, nicht die eines Katalogs: Belegstreifen statt Karten, Linien statt Kästen, Etikettzeilen mit kleinen Mono-Feldnamen statt Tabellen. Der Zustand eines Belegs (Datei, Abbildungen, online, nur analog) steht als Stempel mit eigener Form am Rand, leicht schief wie von Hand gesetzt. Gelesen wird in einer Buchserife; Bedienelemente sprechen eine nüchterne Grotesk, damit Suchen und Blättern sofort als Werkzeug erkennbar sind.\n\nAbgelehnt ist die Katalogseite aus weißer Fläche, Filterspalte und Karten mit Schatten. Abweichung vom Richtungsvertrag: Dort heißt das Feld „leg.“; gebaut ist „Autor“, weil das Publikum überwiegend aus Laien besteht und Klarheit beim Lesen vorgeht. Die Herbarwelt bleibt in Etikettlinien, Mono-Feldnamen, Stempeln und Mappen.",
+    "keyCharacteristics": [
+      "Kühler Belegbogen als Grund, Stiftungsgrün nur als Mappe (Kopf, Fuß, Jahrzehnt-Marke, aktueller Zustand) und als Linkfarbe.",
+      "Inventarnummer SA-0000 in einer festen Randspalte; Etikett, Abschnitte und Titel fluchten auf einer Linie.",
+      "Stempel in Pflaume: Zustand als Form, nicht als Farbe.",
+      "Flach: keine Schatten, Tiefe nur durch Mappenkante, Leinenband und Linien.",
+      "Alle Schriften selbst gehostet (OFL), keine externen Ressourcen."
+    ],
+    "rules": [
+      {
+        "name": "The Mappengrün Rule",
+        "body": "Grün ist Mappe oder Weg: Fläche nur für Kopf, Fuß, Jahrzehnt-Marke und aktuellen Zustand, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ein-Stempel-Farbe Rule",
+        "body": "Pflaume gehört dem Stempel, dem Fokus und dem Cursor. Stempel unterscheiden sich nie über Farbe.",
+        "section": "colors"
+      },
+      {
+        "name": "The Vier-Stimmen Rule",
+        "body": "Spectral liest, Spectral SC stempelt, Plex Mono beschriftet, Public Sans bedient. Keine Stimme übernimmt die Rolle einer anderen.",
+        "section": "typography"
+      },
+      {
+        "name": "The Kein-dünner-Schnitt Rule",
+        "body": "Kein Schnitt unter 400; Fließtext nie kleiner als 1.0625rem, Mono-Beschriftungen nie kleiner als 0.8125rem.",
+        "section": "typography"
+      },
+      {
+        "name": "The Randspalte Rule",
+        "body": "Die Inventarnummer hat ihre eigene Spalte; alles, was zum Beleg gehört, fluchtet auf die Titelkante daneben.",
+        "section": "layout"
+      },
+      {
+        "name": "The Neue-Mappe Rule",
+        "body": "Ein neues Jahrzehnt beginnt eine neue Mappe: grüne Jahrzehnt-Marke und eine 2px grüne Oberlinie statt der feinen Etikettlinie.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flacher-Bogen Rule",
+        "body": "Nichts schwebt. Wo etwas hervortreten soll, wird es geklebt, gestempelt oder unterstrichen, nie beschattet.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Leinenband Rule",
+        "body": "Leinenband hält, was aufgezogen ist: das Logo auf der Mappe und das Leitfoto auf dem Bogen, je zwei Streifen gegenläufig um 4–8° gedreht. Es schmückt keinen Text und keine Bedienelemente.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Stempelform Rule",
+        "body": "Der Zustand eines Belegs ist die Form seines Stempels: Doppelrahmen (3px double) für Dateien wie PDF, rund für Abbildungen, asymmetrisch gerundet für online, gestrichelt für „nur analog“. Jeder Stempel hat einen festen Grundwinkel (−3° bis 2.5°) plus einen Neigungsversatz je Beleg (−2° bis 2°).",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** Zustände als Stempelform ausdrücken (Doppelrahmen, rund, asymmetrisch, gestrichelt), immer in Pflaume.",
+      "**Do** Inhalte mit Linien gliedern: 1px Tinte unter Kopfzeilen, 1px Etikettlinie zwischen Streifen und Feldern, 2px Grün für eine neue Mappe.",
+      "**Do** Feldnamen klein in Plex Mono über oder vor den Wert setzen, als unterstrichene Etikettzeile.",
+      "**Do** die Inventarnummer in die Randspalte (5.75rem) setzen und Zugehöriges auf die Titelkante einrücken.",
+      "**Do** Touch-Ziele mindestens 2.75rem hoch halten und den 3px Fokusring in Pflaume (auf Grün weiß) erhalten.",
+      "**Do** Schriften selbst hosten; keine Laufzeit-Ressourcen von Dritten."
+    ],
+    "donts": [
+      "**Don't** Schatten verwenden, weder auf Karten noch auf Bedienelementen.",
+      "**Don't** Belege als Karten oder Inhalte in gefüllte Kästen setzen; Rahmen gibt es nur an Stempeln, Chips, Seitenzahlen und Filtern.",
+      "**Don't** Stempel über Farbe unterscheiden oder Pflaume außerhalb von Stempel, Fokus und Cursor einsetzen.",
+      "**Don't** Mappengrün als Schmuckfläche im Lesebereich einsetzen.",
+      "**Don't** Schriftschnitte unter 400 verwenden.",
+      "**Don't** Leinenband auf Text oder Bedienelemente kleben; es hält nur Logo und Leitfoto.",
+      "**Don't** das Stiftungslogo verändern oder nachzeichnen."
+    ]
+  }
+}

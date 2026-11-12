@@ -1,133 +1,71 @@
 {% extends "base.html" %}
+{% load senne_common sorl_thumbnail %}
 
-{% load senne_common %}
-{% load sorl_thumbnail %}
-
-{% block page-title %}
-  Startseite
-{% endblock %}
-
-{% block page-header %}
-  <h1 class="sr-only">Startseite &ndash; Digitales Archiv der Naturschutz-Stiftung Senne</h1>
-{% endblock %}
+{% block page-title %}Startseite{% endblock %}
 
 {% block content %}
-  <div class="container" style="padding-top: 1rem;">
-    <div class="row">
-      <div class="col-12 col-md-8">
-        <a href="{{ frontpage.image1_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 1">
-          {% thumbnail frontpage.image1_leading "720" as img %}
-            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 1"
-                 class="img-fluid material-card">
-          {% endthumbnail %}
-        </a>
-      </div>
-      <div class="col-12 col-md-4 mt-4 mt-md-0">
-        <a href="{{ frontpage.image2_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 2">
-          {% thumbnail frontpage.image2_leading "350" as img %}
-            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 2"
-                 class="img-fluid material-card">
-          {% endthumbnail %}
-        </a>
-        <br> <br> <br>
-        <a href="{{ frontpage.image3_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 3">
-          {% thumbnail frontpage.image3_leading "350" as img %}
-            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 3"
-                 class="img-fluid material-card">
-          {% endthumbnail %}
-        </a>
-      </div>
-    </div>
-
-    <div class="spacer"></div>
-
-    <div>
-      <div class="text-center">
-        <h2>{{ frontpage.block1_title }}</h2>
-        <div class="underline-small"></div>
-        <p class="lead">
-          {{ frontpage.block1_subtitle }}
-        </p>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-12 col-lg-8">
-          <span class="frontpage-content">
-            {{ frontpage.block1_content|markdown }}
-          </span>
-        </div>
-        <div class="col-12 col-lg-4">
-          <p class="text-center">
-            <a href="{% url "archive:index" %}">
-              {% thumbnail frontpage.block1_image "350" as img %}
-                <img src="{{ img.url }}" alt="{{ frontpage.block1_title }} &ndash; zum Archiv"
-                     class="img-fluid material-card">
-              {% endthumbnail %}
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spacer"></div>
-
-    <div>
-      <div class="text-center">
-        <h2>{{ frontpage.block2_title }}</h2>
-        <div class="underline-small"></div>
-        <p class="lead">
-          {{ frontpage.block2_subtitle }}
-        </p>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-12 col-lg-4">
-          <p class="text-center">
-            <a href="{{ frontpage.block2_image.url }}" data-lightbox="frontpage" data-title="{{ frontpage.block2_title }}">
-              {% thumbnail frontpage.block2_image "350" as img %}
-                <img src="{{ img.url }}" alt="{{ frontpage.block2_title }}"
-                     class="img-fluid material-card">
-              {% endthumbnail %}
-            </a>
-          </p>
-        </div>
-        <div class="col-12 col-lg-8">
-          <span class="frontpage-content">
-            {{ frontpage.block2_content|markdown }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="spacer"></div>
-
-    <div>
-      <div class="text-center">
-        <h2>{{ frontpage.block3_title }}</h2>
-        <div class="underline-small"></div>
-        <p class="lead">
-          {{ frontpage.block3_subtitle }}
-        </p>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-12 col-lg-8">
-          <span class="frontpage-content">
-            {{ frontpage.block3_content|markdown }}
-          </span>
-        </div>
-        <div class="col-12 col-lg-4">
-          <p class="text-center">
-            <a href="{{ frontpage.block3_image.url }}" data-lightbox="frontpage" data-title="{{ frontpage.block3_title }}">
-              {% thumbnail frontpage.block3_image "350" as img %}
-                <img src="{{ img.url }}" alt="{{ frontpage.block3_title }}"
-                     class="img-fluid material-card">
-              {% endthumbnail %}
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-
+<section class="intro" aria-labelledby="intro-title">
+  <div class="intro-text">
+    <h1 id="intro-title">Das Senne-Archiv</h1>
+    <p class="lead">Literatur, Dokumente und Bilder zur Senne, gesammelt von der Naturschutz-Stiftung Senne. {{ total }} Beleg{{ total|pluralize:"e" }}, viele davon als PDF.</p>
+    {% if decades %}
+      <h2 class="decade-title">Nach Jahrzehnt stöbern</h2>
+      <ul class="decade-rail">
+        {% for value, label, count in decades %}
+          <li><a href="{% url 'archive:index' %}?jahrzehnt={{ value }}">{{ label }} <span>{{ count }}</span></a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if recent %}
+      <h2 class="decade-title">Zuletzt aufgenommen</h2>
+      <ul class="recent">
+        {% for item in recent %}
+          <li><a href="{% url 'archive:details' pk=item.pk %}">{{ item.title }}</a><span>{{ item.medart }}{% if item.year %} · {{ item.year }}{% endif %}</span></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
+  {% if frontpage %}
+    <ul class="plates">
+      {% if frontpage.image1_leading %}
+        <li class="plate-main">
+          <a href="{{ frontpage.image1_leading.url }}" data-viewer="Impression aus der Senne">
+            {% thumbnail frontpage.image1_leading "720" as img %}
+              <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="Impression aus der Senne">
+            {% endthumbnail %}
+          </a>
+        </li>
+      {% endif %}
+      {% for image in frontpage.secondary_images %}
+        <li>
+          <a href="{{ image.url }}" data-viewer="Impression aus der Senne">
+            {% thumbnail image "350" as img %}
+              <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="Impression aus der Senne" loading="lazy">
+            {% endthumbnail %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+
+{% if frontpage %}
+  {% for block in frontpage.blocks %}
+    <section class="block{% cycle '' ' block-flip' %}" aria-labelledby="block-{{ forloop.counter }}">
+      <div class="block-text">
+        <h2 id="block-{{ forloop.counter }}">{{ block.title }}</h2>
+        {% if block.subtitle %}<p class="lead">{{ block.subtitle }}</p>{% endif %}
+        <div class="prose">{{ block.content|markdown }}</div>
+      </div>
+      {% if block.image %}
+        {# The first block's picture has always been the way into the archive. #}
+        <a class="block-image" {% if forloop.first %}href="{% url 'archive:index' %}"{% else %}href="{{ block.image.url }}" data-viewer="{{ block.title }}"{% endif %}>
+          {% thumbnail block.image "560" as img %}
+            <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ block.title }}{% if forloop.first %}, zum Archiv{% endif %}" loading="lazy">
+          {% endthumbnail %}
+        </a>
+      {% endif %}
+    </section>
+  {% endfor %}
+{% endif %}
 {% endblock %}

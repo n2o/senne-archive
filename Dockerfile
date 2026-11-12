@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
-# --- Frontend: npm packages + compiled site.css -------------------------------
+# --- Frontend: compiled site.css (sass) --------------------------------------
 FROM node:24-alpine AS assets
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
-COPY senne/templates/assets ./senne/templates/assets
-RUN npm run build && npm prune --omit=dev
+COPY senne/scss ./senne/scss
+RUN npm run build
 
 # --- Python app ---------------------------------------------------------------
 FROM python:3.13-slim AS app
@@ -24,7 +24,6 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --locked --no-dev --no-install-project
 
 COPY . .
-COPY --from=assets /app/node_modules ./node_modules
 COPY --from=assets /app/senne/templates/assets/css/site.css ./senne/templates/assets/css/site.css
 RUN SECRET_KEY=collectstatic-only python manage.py collectstatic --noinput \
     && useradd --uid 1000 --no-create-home --shell /usr/sbin/nologin app
