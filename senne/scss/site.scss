@@ -23,6 +23,7 @@
   --tape: #d8ccb0;
   --rule: #c4c4b8;
   --white: #ffffff;
+  --edge: 5px solid var(--folder); // the green folder edge closing cover and foot
   --serif: "Spectral", Georgia, serif;
   --sc: "Spectral SC", "Spectral", Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -66,15 +67,13 @@ a:hover { text-decoration-thickness: 2px; }
 
 // The cover is the sheet itself; the green folder shows only as its bottom edge.
 .folder {
-  border-bottom: 5px solid var(--folder);
+  border-bottom: var(--edge);
   a { color: inherit; }
 }
 .folder-inner {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1.25rem var(--gutter);
-  padding-top: 1.25rem;
-  padding-bottom: 1.5rem;
 }
 
 .mount {
@@ -123,6 +122,7 @@ a:hover { text-decoration-thickness: 2px; }
 // Header, sheet and footer share one width and gutter.
 .sheet, .folder-inner, .foot-inner { width: 100%; max-width: 90rem; margin: 0 auto; padding-inline: var(--gutter); }
 .sheet { padding-top: 1.75rem; padding-bottom: 4rem; }
+.folder-inner, .foot-inner { padding-top: 1.25rem; padding-bottom: 1.5rem; }
 
 h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; }
 .lead { font-size: 1.25rem; line-height: 1.5; max-width: 36em; }
@@ -341,12 +341,13 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
 
 // --- Footer ---------------------------------------------------------------------------------
 
+// The foot mirrors the cover: the sheet, closed by a green folder edge.
 .foot {
-  border-top: 7px solid var(--folder-dark); background: var(--folder);
-  color: var(--white); font: 400 1rem/1.4 var(--sans);
-  .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; padding-top: 1.25rem; padding-bottom: 1.25rem; }
+  border-top: var(--edge);
+  color: var(--soft); font: 400 1rem/1.4 var(--sans);
+  .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; }
   nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
-  a { color: var(--white); display: inline-block; padding: 0.4rem 0; }
+  a { display: inline-block; padding: 0.4rem 0; }
 }
 
 // --- Image viewer ---------------------------------------------------------------------------

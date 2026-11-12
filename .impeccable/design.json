@@ -304,7 +304,7 @@
     "rules": [
       {
         "name": "The Mappengrün Rule",
-        "body": "Grün ist Mappe oder Weg: Fläche nur für Kopf, Fuß, Jahrzehnt-Marke und aktuellen Zustand, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.",
+        "body": "Grün ist Mappe oder Weg: Fläche nur für Jahrzehnt-Marke, Suchknopf und aktuellen Zustand, an Kopf und Fuß nur als Kante, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.",
         "section": "colors"
       },
       {

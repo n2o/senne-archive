@@ -133,9 +133,10 @@ components:
     textColor: "{colors.stamp}"
     rounded: "{rounded.full}"
   footer:
-    backgroundColor: "{colors.folder}"
-    textColor: "{colors.white}"
-    padding: "1.25rem clamp(1rem, 3vw, 2.5rem)"
+    backgroundColor: "{colors.sheet}"
+    textColor: "{colors.soft}"
+    borderTop: "5px solid {colors.folder}"
+    typography: "{typography.small}"
   viewer-close:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.white}"
@@ -156,7 +157,7 @@ Die Dichte ist die einer Sammlungsliste, nicht die eines Katalogs: Belegstreifen
 Abgelehnt ist die Katalogseite aus weißer Fläche, Filterspalte und Karten mit Schatten. Abweichung vom Richtungsvertrag: Dort heißt das Feld „leg.“; gebaut ist „Autor“, weil das Publikum überwiegend aus Laien besteht und Klarheit beim Lesen vorgeht. Die Herbarwelt bleibt in Etikettlinien, Mono-Feldnamen, Stempeln und Mappen.
 
 **Key Characteristics:**
-- Kühler Belegbogen als Grund, Stiftungsgrün nur als Mappe (Kopfkante, Fuß, Jahrzehnt-Marke, Suchknopf, aktueller Zustand) und als Linkfarbe.
+- Kühler Belegbogen als Grund, Stiftungsgrün nur als Mappe (Kanten an Kopf und Fuß, Jahrzehnt-Marke, Suchknopf, aktueller Zustand) und als Linkfarbe.
 - Inventarnummer SA-0000 in einer festen Randspalte; Etikett, Abschnitte und Titel fluchten auf einer Linie.
 - Stempel in Pflaume: Zustand als Form, nicht als Farbe.
 - Flach: keine Schatten, Tiefe nur durch Mappenkante, Leinenband und Linien.
@@ -167,8 +168,8 @@ Abgelehnt ist die Katalogseite aus weißer Fläche, Filterspalte und Karten mit 
 Eine gedämpfte Sammlungspalette: kühles Papier, tiefe Etiketttinte, ein Stiftungsgrün als Mappe und ein einziges Pflaume für Stempel.
 
 ### Primary
-- **Stiftungsgrün / Mappengrün** (folder): 5px-Kante unter dem Kopf, Fuß als volle Fläche, Suchknopf, Jahrzehnt-Marke, aktuelle Seite, aktiver Facettenfilter, Hover der Jahrzehnt-Chips, alle Links im Lesebereich. Verbindliche Markenfarbe der Stiftung.
-- **Mappenkante** (folder-dark): die 7px-Kante über dem Fuß und der Hover des Suchknopfs.
+- **Stiftungsgrün / Mappengrün** (folder): 5px-Kanten unter dem Kopf und über dem Fuß, Suchknopf, Jahrzehnt-Marke, aktuelle Seite, aktiver Facettenfilter, Hover der Jahrzehnt-Chips, alle Links im Lesebereich. Verbindliche Markenfarbe der Stiftung.
+- **Mappenkante** (folder-dark): Hover des Suchknopfs.
 - **Mappen-Hellgrün** (folder-text): Feldnamen der Suche und Trefferzahlen auf grüner Fläche, wo reines Weiß zu laut wäre.
 
 ### Secondary
@@ -185,7 +186,7 @@ Eine gedämpfte Sammlungspalette: kühles Papier, tiefe Etiketttinte, ein Stiftu
 - **Weiß** (white): Text auf grüner und schwarzer Fläche. Im Code als Literal ohne eigene Custom Property.
 
 ### Named Rules
-**The Mappengrün Rule.** Grün ist Mappe oder Weg: Fläche nur für Fuß, Jahrzehnt-Marke, Suchknopf und aktuellen Zustand, im Kopf nur als Kante, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.
+**The Mappengrün Rule.** Grün ist Mappe oder Weg: Fläche nur für Jahrzehnt-Marke, Suchknopf und aktuellen Zustand, an Kopf und Fuß nur als Kante, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.
 
 **The Ein-Stempel-Farbe Rule.** Pflaume gehört dem Stempel, dem Fokus und dem Cursor. Stempel unterscheiden sich nie über Farbe.
 
@@ -231,7 +232,7 @@ Ein Bogen mit Randspalte. Der Inhalt sitzt auf `.sheet` (max. 90rem, seitlicher 
 
 ## Elevation & Depth
 
-Das System ist flach; es gibt keinen einzigen `box-shadow`. Tiefe entsteht aus Material: die 5px grüne Mappenkante unter dem Kopf, die 7px dunklere Kante über dem Fuß, die schräg geklebten Leinenband-Streifen über Logo und Leitfoto, die 1px-Linien in Tinte (Kopfzeilen) und Etikettgrau (Streifen, Felder). Einzige Ebene ist der Bildbetrachter: ein natives `<dialog>` auf Bogengrund über einem Tintenschleier (82 %).
+Das System ist flach; es gibt keinen einzigen `box-shadow`. Tiefe entsteht aus Material: die 5px grünen Mappenkanten unter dem Kopf und über dem Fuß, die schräg geklebten Leinenband-Streifen über Logo und Leitfoto, die 1px-Linien in Tinte (Kopfzeilen) und Etikettgrau (Streifen, Felder). Einzige Ebene ist der Bildbetrachter: ein natives `<dialog>` auf Bogengrund über einem Tintenschleier (82 %).
 
 **The Flacher-Bogen Rule.** Nichts schwebt. Wo etwas hervortreten soll, wird es geklebt, gestempelt oder unterstrichen, nie beschattet.
 
@@ -266,7 +267,7 @@ Schwer und eindeutig, wie ein Stempelkissen.
 - **Hauptnavigation:** Public Sans 600 in Weiß auf der Mappe; aktiv und Hover mit 2px weißer Unterkante.
 - **Facetten (Desktop):** Liste mit kurzem Tintenstrich (0.875rem × 1px) vor jedem Eintrag, Zahl rechts in Mono; aktiv wird der Strich zum 1.375rem × 3px grünen Balken und der Text grün und 600.
 - **Seitenzahlen:** 2.75rem Quadrate, 1px Etikettlinie, grüner Text; aktuelle Seite grün gefüllt.
-- **Fuß:** grüne Mappe mit 7px Kante oben, weiße Links in Public Sans.
+- **Fuß:** Bogengrund mit 5px grüner Kante oben, Text in Grau, Links in Mappengrün, Public Sans.
 
 ### Belegstreifen (Signature)
 Ein Eintrag der Trefferliste: Jahrzehnt-Marke (grün gefüllt, nur beim ersten Beleg eines Jahrzehnts), Inventarnummer in Plex Mono, Titel in Spectral 500 als grüner Link, darunter die Etikettzeile mit Feldern als unterstrichene Paare aus Mono-Feldname und Wert, rechts die Stempel. Getrennt durch 1px Etikettlinie, bei neuem Jahrzehnt durch 2px Grün.
