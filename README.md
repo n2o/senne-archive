@@ -1,17 +1,17 @@
 # sennearchiv.de
 
-Digitales Archiv der Naturschutz-Stiftung Senne. Django 5.2 LTS, Bootstrap 4.
+Digitales Archiv der Naturschutz-Stiftung Senne. Django 5.2 LTS, eigenes CSS (Sass), kein Frontend-Framework.
 
 - **Hosting:** schnaq-Cluster (Scaleway Kapsule) via ArgoCD, Chart `charts/sennearchiv` in `schnaq/charts`
 - **Daten:** Postgres (Scaleway `pg0`, DB `sennearchiv`)
 - **Dateien:** privater S3-Bucket `sennearchiv` (Scaleway-Projekt „Sennearchiv“), ausgeliefert über signierte URLs
-- **Statics:** im Image gebaut, ausgeliefert von WhiteNoise
+- **Statics:** im Image gebaut, ausgeliefert von WhiteNoise; Schriften (OFL) liegen selbst gehostet in `senne/templates/assets/fonts`
 - **Image:** `ghcr.io/n2o/senne-archive:sha-<commit>`, gebaut von GitHub Actions bei jedem Push auf `master`
 
 ## Lokal entwickeln
 
 ```sh
-npm ci && npm run build          # Frontend-Pakete + site.css
+npm ci && npm run build          # site.css aus Sass
 uv sync
 export SECRET_KEY=dev DEBUG=true # ohne DATABASE_URL/S3_BUCKET: SQLite + Dateien in ./media
 uv run python manage.py migrate

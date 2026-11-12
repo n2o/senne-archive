@@ -1,0 +1,6 @@
+{% load senne_common %}<p class="stamps{% if big %} big{% endif %}" style="--tilt: {{ item.pk|tilt }}">
+  {% for file in item.files %}<span class="stamp doc">{{ file.name|file_kind }}</span>{% endfor %}
+  {% with n=item.images|length %}{% if n %}<span class="stamp fig">{{ n }} Abb.</span>{% endif %}{% endwith %}
+  {% if item.digital_reference %}<span class="stamp web">online</span>{% endif %}
+  {% if not item.files and not item.images and not item.digital_reference %}<span class="stamp analog">nur analog</span>{% endif %}
+</p>

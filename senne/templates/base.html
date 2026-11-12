@@ -3,110 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{% block meta-description %}Digitales Archiv der Naturschutz-Stiftung Senne{% endblock %}">
+  <meta name="description" content="{% block meta-description %}Digitales Archiv der Naturschutz-Stiftung Senne: Literatur, Dokumente und Bilder zur Senne.{% endblock %}">
+  <meta name="theme-color" content="#f2f2ec">
+  <title>{% block page-title %}{% endblock %} · Senne-Archiv</title>
 
-  <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'lightbox2/dist/css/lightbox.min.css' %}">
-  <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+  <link rel="preload" href="{% static 'fonts/spectral-latin-400-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{% static 'css/site.css' %}">
-
-  <link rel="shortcut icon" href="{% static 'img/favicons/favicon.ico' %}">
-  <link rel="icon" sizes="16x16 32x32 64x64" href="{% static 'img/favicons/favicon.ico' %}">
-  <link rel="icon" type="image/png" sizes="196x196" href="{% static 'img/favicons/favicon-192.png' %}">
-  <link rel="icon" type="image/png" sizes="160x160" href="{% static 'img/favicons/favicon-160.png' %}">
-  <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicons/favicon-96.png' %}">
-  <link rel="icon" type="image/png" sizes="64x64" href="{% static 'img/favicons/favicon-64.png' %}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicons/favicon-32.png' %}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16.png' %}">
-  <link rel="apple-touch-icon" href="{% static 'img/favicons/favicon-57.png' %}">
-  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/favicons/favicon-114.png' %}">
-  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/favicons/favicon-72.png' %}">
-  <link rel="apple-touch-icon" sizes="144x144" href="{% static 'img/favicons/favicon-144.png' %}">
-  <link rel="apple-touch-icon" sizes="60x60" href="{% static 'img/favicons/favicon-60.png' %}">
-  <link rel="apple-touch-icon" sizes="120x120" href="{% static 'img/favicons/favicon-120.png' %}">
-  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicons/favicon-76.png' %}">
-  <link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/favicons/favicon-152.png' %}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicons/favicon-180.png' %}">
-  <meta name="msapplication-TileColor" content="#FFFFFF">
-  <meta name="msapplication-TileImage" content="{% static 'img/favicons/favicon-144.png' %}">
-  <meta name="msapplication-config" content="{% static 'img/favicons/browserconfig.xml' %}">
-
-  {% block styles %}{% endblock %}
-
-  <title>{% block page-title %}{% endblock %} :: Naturschutz-Stiftung Senne</title>
+  <link rel="icon" href="{% static 'img/favicons/favicon.ico' %}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{% static 'img/favicons/favicon-192.png' %}" sizes="192x192">
+  <link rel="apple-touch-icon" href="{% static 'img/favicons/favicon-180.png' %}">
 </head>
 
 <body>
+<a class="skip" href="#content">Zum Inhalt springen</a>
 
-<a class="sr-only sr-only-focusable btn btn-primary" href="#content">Zum Inhalt springen</a>
-
-<header id="site-header-wrapper" class="text-center">
-  <span id="site-header">
-    Senne Archiv der Naturschutz-Stiftung Senne
-  </span>
+<header class="folder">
+ <div class="folder-inner">
+  <a class="mount" href="{% url 'index' %}">
+    <img src="{% static 'img/logo.jpg' %}" width="340" height="235"
+         alt="Senne-Archiv der Naturschutz-Stiftung Senne, zur Startseite">
+  </a>
+  <div class="folder-body">
+    <div class="folder-top">
+      <p class="name">Senne-Archiv <span><span class="dot">· </span>Naturschutz-Stiftung Senne</span></p>
+      <nav aria-label="Hauptnavigation">
+        <a href="{% url 'index' %}" {% if request.resolver_match.view_name == 'index' %}aria-current="page"{% endif %}>Startseite</a>
+        <a href="{% url 'archive:index' %}" {% if request.resolver_match.namespace == 'archive' %}aria-current="page"{% endif %}>Archiv</a>
+      </nav>
+    </div>
+    <form class="search" action="{% url 'archive:index' %}" method="get" role="search" aria-label="Archiv durchsuchen">
+      <label class="search-q">Stichwort
+        <input type="search" name="q" value="{{ query }}" placeholder="z. B. Heide, Lutter, Hövelhof">
+      </label>
+      <label class="search-a">Autorin, Autor
+        <select name="autor">
+          <option value="">Alle Autorinnen und Autoren</option>
+          {% for author in authors %}
+            <option value="{{ author.pk }}" {% if author == selected_author %}selected{% endif %}>{{ author }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      {% if decade %}<input type="hidden" name="jahrzehnt" value="{{ decade }}">{% endif %}
+      {% if medart %}<input type="hidden" name="art" value="{{ medart }}">{% endif %}
+      <button type="submit">Suchen</button>
+    </form>
+  </div>
+ </div>
 </header>
 
-<nav class="navbar navbar-expand-sm navbar-light" aria-label="Hauptnavigation">
-  <div class="container">
-    <div class="navbar-nav mx-auto">
-      <a class="nav-item nav-link" href="{% url 'index' %}"
-         {% if request.resolver_match.view_name == 'index' %}aria-current="page"{% endif %}>
-        Startseite
-      </a>
-      <a class="nav-item nav-link" href="{% url 'archive:index' %}"
-         {% if request.resolver_match.view_name == 'archive:index' %}aria-current="page"{% endif %}>
-        Hier geht es zum Archiv
-      </a>
-    </div>
-  </div>
-</nav>
-
-<div class="underline"></div>
-
-<main id="content" class="container">
-  {% block page-header %}{% endblock %}
+<main id="content" class="sheet">
   {% block content %}{% endblock %}
 </main>
 
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <span class="btn">
-          &copy; {% now "Y" %} Naturschutz-Stiftung Senne
-        </span>
-      </div>
-      <div class="col">
-        <div class="text-right">
-          <a class="btn btn-link" href="{% url 'admin:index' %}">
-            {% if user.is_staff %}
-              Adminbereich
-            {% else %}
-              Login
-            {% endif %}
-          </a>
-          {% if user.is_staff %}
-            <a class="btn btn-link" href="https://docs.sennearchiv.de">
-              Dokumentation
-            </a>
-          {% endif %}
-          <a class="btn btn-link" href="{% url "pages" url="datenschutz" %}">Datenschutz</a>
-          <a class="btn btn-link" href="{% url "pages" url="impressum" %}">Impressum</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<footer class="foot">
+ <div class="foot-inner">
+  <p>&copy; {% now "Y" %} Naturschutz-Stiftung Senne</p>
+  <nav aria-label="Rechtliches">
+    <a href="{% url 'pages' url='datenschutz/' %}">Datenschutz</a>
+    <a href="{% url 'pages' url='impressum/' %}">Impressum</a>
+    {% if user.is_staff %}
+      <a href="https://docs.sennearchiv.de">Dokumentation</a>
+      <a href="{% url 'admin:index' %}">Adminbereich</a>
+    {% else %}
+      <a href="{% url 'admin:index' %}">Login</a>
+    {% endif %}
+  </nav>
+ </div>
 </footer>
 
-<script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-<script src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'lightbox2/dist/js/lightbox.min.js' %}"></script>
-<script>
-  // Titles come from data-title; never let lightbox2 insert them as HTML.
-  lightbox.option({sanitizeTitle: true, albumLabel: "Bild %1 von %2"});
-</script>
-
-{% block after_content %}{% endblock %}
-
+<dialog class="viewer" id="viewer" aria-labelledby="viewer-caption">
+  <form method="dialog"><button class="viewer-close">Schließen</button></form>
+  <figure><figcaption id="viewer-caption"></figcaption></figure>
+</dialog>
+<script src="{% static 'js/site.js' %}" defer></script>
 </body>
 </html>
