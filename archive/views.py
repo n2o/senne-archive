@@ -1,62 +1,65 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.files.storage import default_storage
+from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Item, Author
+from .models import Author, Item
 
-
-def index(request: HttpRequest):
-    query_get = request.GET.get("q")
-    author_get = request.GET.get("autor")
-    page = request.GET.get("seite", 1)
-    authors = Author.objects.all()
-    author = __get_author_from_get_parameter(author_get)
-    items_from_db = __query_items(query_get, author)
-    prepared_items = __paginate_results(items_from_db, page)
-    return render(request, "archive/index.html", {"items": prepared_items,
-                                                  "forloop_modifier": 20 * (int(page) - 1),
-                                                  "authors": authors,
-                                                  "no_results": (query_get or author) and not prepared_items,
-                                                  "empty_result": "q" in request.GET and "autor" in request.GET})
+PAGE_SIZE = 20
 
 
-def __get_author_from_get_parameter(author):
-    try:
-        if author:
-            author = Author.objects.get(pk=int(author))
-    except ValueError:
-        author = None
-    except ObjectDoesNotExist:
-        author = None
-    return author
+def index(request):
+    query = request.GET.get("q", "").strip()
+    author = _author_from_param(request.GET.get("autor"))
+    items = _query_items(query, author)
+    page = Paginator(items, PAGE_SIZE).get_page(request.GET.get("seite"))
+    return render(
+        request,
+        "archive/index.html",
+        {
+            "items": page,
+            "authors": Author.objects.order_by("lastname", "firstname"),
+            "query": query,
+            "selected_author": author,
+            "searched": bool(query or author),
+            "empty_search": "q" in request.GET and not (query or author),
+        },
+    )
 
 
-def __paginate_results(items, page):
-    paginator = Paginator(items, 20)
-    try:
-        prepared_items = paginator.page(page)
-    except PageNotAnInteger:
-        prepared_items = paginator.page(1)
-    except EmptyPage:
-        prepared_items = paginator.page(paginator.num_pages)
-    return prepared_items
+def _author_from_param(value):
+    if value and value.isascii() and value.isdigit():
+        return Author.objects.filter(pk=value).first()
+    return None
 
 
-def __query_items(query: str, author: Author):
-    if not query and author:
-        return Item.objects.filter(public=True).filter(author=author)
+def _query_items(query, author):
+    if not (query or author):
+        return Item.objects.none()
+    items = Item.objects.filter(public=True).select_related("author").order_by("title", "pk")
     if query:
-        items = Item.objects \
-            .filter(public=True) \
-            .filter(Q(title__icontains=query) |
-                    Q(abstract__icontains=query))
-        return items.filter(author=author) if author else items
-    return []
+        items = items.filter(
+            Q(title__icontains=query)
+            | Q(abstract__icontains=query)
+            | Q(notes__icontains=query)
+            | Q(keywords__icontains=query)
+        )
+    if author:
+        items = items.filter(author=author)
+    return items
 
 
-def detail(request: HttpRequest, pk: Item):
-    item_db = get_object_or_404(Item, pk=pk)
-    item = item_db if item_db.public else None
+def detail(request, pk):
+    item = get_object_or_404(Item.objects.select_related("author"), pk=pk, public=True)
     return render(request, "archive/detail.html", {"item": item})
+
+
+def media(request, name):
+    """Old /media/... links (indexed by Google) → fresh signed S3 URL, for files of public items only."""
+    match = Q()
+    for field in Item.FILE_FIELDS + Item.IMAGE_FIELDS:
+        match |= Q(**{field: name})
+    if not Item.objects.filter(match, public=True).exists():
+        raise Http404
+    return redirect(default_storage.url(name))

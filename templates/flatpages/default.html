@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
 {% load senne_common %}
 
-{% block page-title %}
-  {{ flatpage.title }}
-{% endblock %}
+{% block page-title %}{{ flatpage.title }}{% endblock %}
 
 {% block page-header %}
-  {{ flatpage.title }}
+  <div class="page-header">
+    <h1>{{ flatpage.title }}</h1>
+  </div>
 {% endblock %}
 
 {% block content %}
-  {{ flatpage.content }}
+  {{ flatpage.content|markdown }}
 {% endblock %}

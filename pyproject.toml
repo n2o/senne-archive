@@ -1,0 +1,32 @@
+[project]
+name = "senne-archive"
+version = "2.0.0"
+description = "Digitales Archiv der Naturschutz-Stiftung Senne (sennearchiv.de)"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "django>=5.2.19,<5.3",
+    "django-reversion>=6.5",
+    "django-pagedown>=2.2.1",
+    "django-storages[s3]>=1.14.6",
+    "dj-database-url>=3.1",
+    "gunicorn>=27",
+    "markdown>=3.11",
+    "pillow>=13",
+    "psycopg[binary]>=3.3",
+    "sorl-thumbnail>=13.4",
+    "whitenoise>=6.12",
+    "nh3>=0.3.7",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.14"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

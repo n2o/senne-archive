@@ -1,36 +1,39 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
-{% load markdown_deux_tags %}
+{% load senne_common %}
 {% load sorl_thumbnail %}
 
 {% block page-title %}
   Startseite
 {% endblock %}
 
+{% block page-header %}
+  <h1 class="sr-only">Startseite &ndash; Digitales Archiv der Naturschutz-Stiftung Senne</h1>
+{% endblock %}
+
 {% block content %}
   <div class="container" style="padding-top: 1rem;">
     <div class="row">
-      <div class="col-8">
-        <a href="{{ frontpage.image1_leading.url }}" data-lightbox="frontpage">
+      <div class="col-12 col-md-8">
+        <a href="{{ frontpage.image1_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 1">
           {% thumbnail frontpage.image1_leading "720" as img %}
-            <img src="{{ img.url }}" alt="Senne Leading Image 1"
-                 class="img-fluid material-card material-card-2">
+            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 1"
+                 class="img-fluid material-card">
           {% endthumbnail %}
         </a>
       </div>
-      <div class="col-4">
-        <a href="{{ frontpage.image2_leading.url }}" data-lightbox="frontpage">
+      <div class="col-12 col-md-4 mt-4 mt-md-0">
+        <a href="{{ frontpage.image2_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 2">
           {% thumbnail frontpage.image2_leading "350" as img %}
-            <img src="{{ img.url }}" alt="Senne Leading Image 2"
-                 class="img-fluid material-card material-card-2">
+            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 2"
+                 class="img-fluid material-card">
           {% endthumbnail %}
         </a>
         <br> <br> <br>
-        <a href="{{ frontpage.image3_leading.url }}" data-lightbox="frontpage">
+        <a href="{{ frontpage.image3_leading.url }}" data-lightbox="frontpage" data-title="Impression aus der Senne &ndash; Bild 3">
           {% thumbnail frontpage.image3_leading "350" as img %}
-            <img src="{{ img.url }}" alt="Senne Leading Image 3"
-                 class="img-fluid material-card material-card-2">
+            <img src="{{ img.url }}" alt="Impression aus der Senne &ndash; Bild 3"
+                 class="img-fluid material-card">
           {% endthumbnail %}
         </a>
       </div>
@@ -57,8 +60,8 @@
           <p class="text-center">
             <a href="{% url "archive:index" %}">
               {% thumbnail frontpage.block1_image "350" as img %}
-                <img src="{{ img.url }}" alt="Senne Block Image 1"
-                     class="img-fluid material-card material-card-2">
+                <img src="{{ img.url }}" alt="{{ frontpage.block1_title }} &ndash; zum Archiv"
+                     class="img-fluid material-card">
               {% endthumbnail %}
             </a>
           </p>
@@ -80,10 +83,10 @@
       <div class="row">
         <div class="col-12 col-lg-4">
           <p class="text-center">
-            <a href="{{ frontpage.block2_image.url }}" data-lightbox="frontpage">
+            <a href="{{ frontpage.block2_image.url }}" data-lightbox="frontpage" data-title="{{ frontpage.block2_title }}">
               {% thumbnail frontpage.block2_image "350" as img %}
-                <img src="{{ img.url }}" alt="Senne Block Image 2"
-                     class="img-fluid material-card material-card-2">
+                <img src="{{ img.url }}" alt="{{ frontpage.block2_title }}"
+                     class="img-fluid material-card">
               {% endthumbnail %}
             </a>
           </p>
@@ -115,10 +118,10 @@
         </div>
         <div class="col-12 col-lg-4">
           <p class="text-center">
-            <a href="{{ frontpage.block3_image.url }}" data-lightbox="frontpage">
+            <a href="{{ frontpage.block3_image.url }}" data-lightbox="frontpage" data-title="{{ frontpage.block3_title }}">
               {% thumbnail frontpage.block3_image "350" as img %}
-                <img src="{{ img.url }}" alt="Senne Block Image 3"
-                     class="img-fluid material-card material-card-2">
+                <img src="{{ img.url }}" alt="{{ frontpage.block3_title }}"
+                     class="img-fluid material-card">
               {% endthumbnail %}
             </a>
           </p>
