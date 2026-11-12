@@ -23,11 +23,11 @@ Entschieden im Bau: fest chronologisch, älteste zuerst (ohne Jahr am Ende). Fel
 
 THESIS: Das Archiv ist eine Herbarsammlung: jeder Eintrag ein Beleg mit Etikett, das Archiv eine Folge grüner Gattungsmappen. Verweigert wird die Katalogseite aus weißer Fläche, Filterspalte und Karten mit Schatten.
 
-OWN-WORLD: Kühler Belegbogen #f2f2ec als Grund, Mappenkopf in Stiftungsgrün #226c36 mit Logo unter Leinenband (#d8ccb0), Etikett-Tinte #1d1f1c, Eingangsstempel in Pflaume #7a2e55. Etikettfelder als unterstrichene Zeilen mit kleinen Mono-Feldnamen (leg., Jahr, Art), Titel in einer Buchserife, Inventarnummer SA-0000 in der Randspalte, Zustand als Stempelform (Doppelrahmen PDF, rund Abbildungen, gestrichelt nur analog). Keine Kästen, keine Schatten.
+OWN-WORLD: Kühler Belegbogen #f2f2ec als Grund, Kopf auf dem Bogen mit 5px Mappenkante in Stiftungsgrün #226c36 (auf Wunsch des Nutzers statt grüner Fläche), Logo unter Leinenband (#d8ccb0), Etikett-Tinte #1d1f1c, Eingangsstempel in Pflaume #7a2e55. Etikettfelder als unterstrichene Zeilen mit kleinen Mono-Feldnamen (leg., Jahr, Art), Titel in einer Buchserife, Inventarnummer SA-0000 in der Randspalte, Zustand als Stempelform (Doppelrahmen PDF, rund Abbildungen, gestrichelt nur analog). Keine Kästen, keine Schatten.
 
 STORY: Besucher sehen sofort, was die Sammlung enthält, blättern nach Jahrzehnt oder suchen, erkennen am Stempel, ob es ein Dokument gibt, und öffnen es auf der Detailseite mit einem Griff.
 
-FIRST VIEWPORT: Grüner Mappenkopf über volle Breite: Logo links mit Leinenband, Name, Navigation rechts, darunter Stichwort- und Autorfeld mit Suchen. Darunter links Jahrzehnte und Medienart, rechts Trefferzeile „62 Treffer … Seite 1 von 4“ und Belegstreifen: Jahrzehnt + Inventarnummer in der Randspalte, Titel, Etikettzeile, Stempel rechts.
+FIRST VIEWPORT: Heller Kopf mit grüner Mappenkante, Inhalt in derselben Breite wie der Bogen (max. 90rem): Logo links mit Leinenband, Name, Navigation rechts, darunter Stichwort- und Autorfeld mit Suchen. Darunter links Jahrzehnte und Medienart, rechts Trefferzeile „62 Treffer … Seite 1 von 4“ und Belegstreifen: Jahrzehnt + Inventarnummer in der Randspalte, Titel, Etikettzeile, Stempel rechts.
 
 FORM: Herbarbeleg, Platz 5 der eigenen Liste (gezogen). seed:f4d75dff586c31a8
 

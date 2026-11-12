@@ -22,6 +22,7 @@
   --stamp: #7a2e55;
   --tape: #d8ccb0;
   --rule: #c4c4b8;
+  --white: #ffffff;
   --serif: "Spectral", Georgia, serif;
   --sc: "Spectral SC", "Spectral", Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -57,22 +58,23 @@ a:hover { text-decoration-thickness: 2px; }
 
 .skip {
   position: absolute; left: var(--gutter); top: -4rem; z-index: 10;
-  padding: 0.75rem 1rem; background: var(--ink); color: #fff; font-family: var(--sans);
+  padding: 0.75rem 1rem; background: var(--ink); color: var(--white); font-family: var(--sans);
   &:focus { top: 0.75rem; }
 }
 
 // --- Folder cover: logo under linen tape, name, navigation, search ---------------------------
 
+// The cover is the sheet itself; the green folder shows only as its bottom edge.
 .folder {
-  position: relative;
+  border-bottom: 5px solid var(--folder);
+  a { color: inherit; }
+}
+.folder-inner {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1.25rem var(--gutter);
-  padding: 1.25rem var(--gutter) 1.75rem;
-  background: var(--folder);
-  border-bottom: 7px solid var(--folder-dark);
-  color: #fff;
-  a { color: inherit; }
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
 }
 
 .mount {
@@ -95,7 +97,7 @@ a:hover { text-decoration-thickness: 2px; }
 .folder nav {
   display: flex; gap: 1.75rem; font: 600 1.0625rem/1 var(--sans);
   a { text-decoration: none; padding: 0.5rem 0; border-bottom: 2px solid transparent; }
-  a:hover, a[aria-current] { border-bottom-color: #fff; }
+  a:hover, a[aria-current] { border-bottom-color: var(--folder); }
 }
 
 .search {
@@ -105,21 +107,22 @@ a:hover { text-decoration-thickness: 2px; }
   align-items: end;
   margin-top: 1.25rem;
   max-width: 64rem;
-  label { display: grid; gap: 0.4rem; font: 500 0.8125rem/1 var(--mono); color: var(--folder-text); }
+  label { display: grid; gap: 0.4rem; font: 500 0.8125rem/1 var(--mono); color: var(--soft); }
   input, select, button {
-    height: 3rem; border: 0; border-radius: 2px; padding: 0 0.875rem;
-    font: 400 1.0625rem/1 var(--sans); color: var(--ink); background: var(--sheet);
+    height: 3rem; border: 1px solid var(--soft); border-radius: 2px; padding: 0 0.875rem;
+    font: 400 1.0625rem/1 var(--sans); color: var(--ink); background: var(--white);
   }
   select { width: 100%; text-overflow: ellipsis; }
   input::placeholder { color: var(--soft); }
-  button { padding: 0 1.75rem; background: var(--ink); color: #fff; font-weight: 600; cursor: pointer; }
-  button:hover { background: var(--folder-dark); }
-  :focus-visible { outline-color: #fff; }
+  button { padding: 0 1.75rem; border-color: var(--folder); background: var(--folder); color: var(--white); font-weight: 600; cursor: pointer; }
+  button:hover { border-color: var(--folder-dark); background: var(--folder-dark); }
 }
 
 // --- Sheet ----------------------------------------------------------------------------------
 
-.sheet { width: 100%; max-width: 90rem; margin: 0 auto; padding: 1.75rem var(--gutter) 4rem; }
+// Header, sheet and footer share one width and gutter.
+.sheet, .folder-inner, .foot-inner { width: 100%; max-width: 90rem; margin: 0 auto; padding-inline: var(--gutter); }
+.sheet { padding-top: 1.75rem; padding-bottom: 4rem; }
 
 h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; }
 .lead { font-size: 1.25rem; line-height: 1.5; max-width: 36em; }
@@ -197,7 +200,7 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
   .count + &, .filters + & { border-top: 0; }
   .bandmark:not(:empty) {
     justify-self: start; padding: 0.2rem 0.55rem 0.25rem; border-radius: 2px;
-    background: var(--folder); color: #fff; font-size: 0.9375rem; font-weight: 600;
+    background: var(--folder); color: var(--white); font-size: 0.9375rem; font-weight: 600;
   }
   .plate { padding-top: 0.35rem; }
   h2 { font-size: 1.25rem; font-weight: 500; line-height: 1.3; max-width: 44em; }
@@ -232,7 +235,7 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
   a, span { min-width: 2.75rem; min-height: 2.75rem; display: inline-grid; place-items: center; padding: 0 0.6rem; }
   a { color: var(--folder); border: 1px solid var(--rule); text-decoration: none; }
   a:hover { border-color: var(--folder); }
-  [aria-current] { background: var(--folder); color: #fff; font-weight: 600; }
+  [aria-current] { background: var(--folder); color: var(--white); font-weight: 600; }
 }
 
 // --- Voucher sheet (detail) -----------------------------------------------------------------
@@ -289,7 +292,7 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
     display: inline-flex; gap: 0.5rem; align-items: baseline; min-height: 2.75rem; padding: 0.55rem 0.9rem;
     border: 1px solid var(--ink); border-radius: 2px; color: var(--ink); text-decoration: none; font-weight: 500;
   }
-  a:hover { background: var(--folder); border-color: var(--folder); color: #fff; }
+  a:hover { background: var(--folder); border-color: var(--folder); color: var(--white); }
   a:hover span { color: var(--folder-text); }
   span { font: 400 0.8125rem/1 var(--mono); color: var(--soft); }
 }
@@ -339,11 +342,11 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
 // --- Footer ---------------------------------------------------------------------------------
 
 .foot {
-  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem;
-  padding: 1.25rem var(--gutter); border-top: 7px solid var(--folder-dark); background: var(--folder);
-  color: #fff; font: 400 1rem/1.4 var(--sans);
+  border-top: 7px solid var(--folder-dark); background: var(--folder);
+  color: var(--white); font: 400 1rem/1.4 var(--sans);
+  .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 2rem; padding-top: 1.25rem; padding-bottom: 1.25rem; }
   nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
-  a { color: #fff; display: inline-block; padding: 0.4rem 0; }
+  a { color: var(--white); display: inline-block; padding: 0.4rem 0; }
 }
 
 // --- Image viewer ---------------------------------------------------------------------------
@@ -358,7 +361,7 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
 }
 .viewer-close {
   position: absolute; top: 0.6rem; right: 0.6rem; min-height: 2.75rem; padding: 0 1rem; border: 0;
-  background: var(--ink); color: #fff; font: 600 1rem/1 var(--sans); cursor: pointer;
+  background: var(--ink); color: var(--white); font: 600 1rem/1 var(--sans); cursor: pointer;
 }
 @keyframes viewer-in { from { opacity: 0; transform: scale(0.97); } }
 @media (prefers-reduced-motion: reduce) {
@@ -378,14 +381,14 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
     a { min-height: 2.75rem; padding: 0 0.8rem; border: 1px solid var(--rule); border-radius: 2px; white-space: nowrap; }
     a::before, a[aria-current]::before { display: none; }
     a span { margin-left: 0.15rem; }
-    a[aria-current] { border-color: var(--folder); background: var(--folder); color: #fff; }
+    a[aria-current] { border-color: var(--folder); background: var(--folder); color: var(--white); }
     a[aria-current] span { color: var(--folder-text); }
   }
 }
 
 @media (max-width: 40rem) {
   // Compact cover: logo beside the name, keyword and button on one line, author below.
-  .folder { gap: 0.875rem 1rem; padding-top: 1rem; padding-bottom: 1rem; }
+  .folder-inner { gap: 0.875rem 1rem; padding-top: 1rem; padding-bottom: 1rem; }
   .mount { width: 5.25rem; &::before, &::after { width: 1.9rem; height: 0.7rem; } }
   .folder-body { display: contents; }
   .folder-top { gap: 0.25rem; }

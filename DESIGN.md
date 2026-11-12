@@ -83,17 +83,19 @@ spacing:
   touch: "2.75rem"
 components:
   folder-cover:
-    backgroundColor: "{colors.folder}"
-    textColor: "{colors.white}"
-    padding: "1.25rem clamp(1rem, 3vw, 2.5rem) 1.75rem"
-  search-field:
     backgroundColor: "{colors.sheet}"
+    textColor: "{colors.ink}"
+    borderBottom: "5px solid {colors.folder}"
+    maxWidth: "90rem"
+    padding: "1.25rem clamp(1rem, 3vw, 2.5rem) 1.5rem"
+  search-field:
+    backgroundColor: "{colors.white}"
     textColor: "{colors.ink}"
     rounded: "{rounded.sm}"
     height: "3rem"
     padding: "0 0.875rem"
   button-search:
-    backgroundColor: "{colors.ink}"
+    backgroundColor: "{colors.folder}"
     textColor: "{colors.white}"
     typography: "{typography.control}"
     rounded: "{rounded.sm}"
@@ -147,14 +149,14 @@ components:
 
 **Creative North Star: "Die Herbarsammlung"**
 
-Das Archiv ist eine Herbarsammlung: Jeder Eintrag ist ein Beleg auf einem kühlen Bogen, mit Etikett, Inventarnummer in der Randspalte und Eingangsstempel; das Archiv als Ganzes ist eine Folge grüner Gattungsmappen, eine pro Jahrzehnt. Der Mappenkopf in Stiftungsgrün trägt das Logo wie ein aufgeklebtes Präparat unter zwei Streifen Leinenband.
+Das Archiv ist eine Herbarsammlung: Jeder Eintrag ist ein Beleg auf einem kühlen Bogen, mit Etikett, Inventarnummer in der Randspalte und Eingangsstempel; das Archiv als Ganzes ist eine Folge grüner Gattungsmappen, eine pro Jahrzehnt. Der Kopf ist der Bogen selbst mit einer kräftigen grünen Mappenkante unten; er trägt das Logo wie ein aufgeklebtes Präparat unter zwei Streifen Leinenband.
 
 Die Dichte ist die einer Sammlungsliste, nicht die eines Katalogs: Belegstreifen statt Karten, Linien statt Kästen, Etikettzeilen mit kleinen Mono-Feldnamen statt Tabellen. Der Zustand eines Belegs (Datei, Abbildungen, online, nur analog) steht als Stempel mit eigener Form am Rand, leicht schief wie von Hand gesetzt. Gelesen wird in einer Buchserife; Bedienelemente sprechen eine nüchterne Grotesk, damit Suchen und Blättern sofort als Werkzeug erkennbar sind.
 
 Abgelehnt ist die Katalogseite aus weißer Fläche, Filterspalte und Karten mit Schatten. Abweichung vom Richtungsvertrag: Dort heißt das Feld „leg.“; gebaut ist „Autor“, weil das Publikum überwiegend aus Laien besteht und Klarheit beim Lesen vorgeht. Die Herbarwelt bleibt in Etikettlinien, Mono-Feldnamen, Stempeln und Mappen.
 
 **Key Characteristics:**
-- Kühler Belegbogen als Grund, Stiftungsgrün nur als Mappe (Kopf, Fuß, Jahrzehnt-Marke, aktueller Zustand) und als Linkfarbe.
+- Kühler Belegbogen als Grund, Stiftungsgrün nur als Mappe (Kopfkante, Fuß, Jahrzehnt-Marke, Suchknopf, aktueller Zustand) und als Linkfarbe.
 - Inventarnummer SA-0000 in einer festen Randspalte; Etikett, Abschnitte und Titel fluchten auf einer Linie.
 - Stempel in Pflaume: Zustand als Form, nicht als Farbe.
 - Flach: keine Schatten, Tiefe nur durch Mappenkante, Leinenband und Linien.
@@ -165,8 +167,8 @@ Abgelehnt ist die Katalogseite aus weißer Fläche, Filterspalte und Karten mit 
 Eine gedämpfte Sammlungspalette: kühles Papier, tiefe Etiketttinte, ein Stiftungsgrün als Mappe und ein einziges Pflaume für Stempel.
 
 ### Primary
-- **Stiftungsgrün / Mappengrün** (folder): Mappenkopf und Fuß als volle Fläche, Jahrzehnt-Marke, aktuelle Seite, aktiver Facettenfilter, Hover der Jahrzehnt-Chips, alle Links im Lesebereich. Verbindliche Markenfarbe der Stiftung.
-- **Mappenkante** (folder-dark): ausschließlich die 7px-Kante, die Kopf und Fuß gegen den Bogen absetzt.
+- **Stiftungsgrün / Mappengrün** (folder): 5px-Kante unter dem Kopf, Fuß als volle Fläche, Suchknopf, Jahrzehnt-Marke, aktuelle Seite, aktiver Facettenfilter, Hover der Jahrzehnt-Chips, alle Links im Lesebereich. Verbindliche Markenfarbe der Stiftung.
+- **Mappenkante** (folder-dark): die 7px-Kante über dem Fuß und der Hover des Suchknopfs.
 - **Mappen-Hellgrün** (folder-text): Feldnamen der Suche und Trefferzahlen auf grüner Fläche, wo reines Weiß zu laut wäre.
 
 ### Secondary
@@ -177,13 +179,13 @@ Eine gedämpfte Sammlungspalette: kühles Papier, tiefe Etiketttinte, ein Stiftu
 
 ### Neutral
 - **Belegbogen** (sheet): Seitengrund, Suchfelder, Bildbetrachter.
-- **Etiketttinte** (ink): Fließtext, Überschriften, die tragenden 1px-Linien unter Kopfzeilen und Abschnitten, der Suchknopf.
+- **Etiketttinte** (ink): Fließtext, Überschriften, Name und Navigation im Kopf, die tragenden 1px-Linien unter Kopfzeilen und Abschnitten.
 - **Bleistiftgrau** (soft): Feldnamen, Inventarnummern, Zähler, Nebentexte.
 - **Etikettlinie** (rule): feine Trennlinien zwischen Belegstreifen und unter Etikettfeldern, Rahmen der Seitenzahlen.
 - **Weiß** (white): Text auf grüner und schwarzer Fläche. Im Code als Literal ohne eigene Custom Property.
 
 ### Named Rules
-**The Mappengrün Rule.** Grün ist Mappe oder Weg: Fläche nur für Kopf, Fuß, Jahrzehnt-Marke und aktuellen Zustand, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.
+**The Mappengrün Rule.** Grün ist Mappe oder Weg: Fläche nur für Fuß, Jahrzehnt-Marke, Suchknopf und aktuellen Zustand, im Kopf nur als Kante, sonst nur als Linkfarbe. Kein grüner Schmuck, keine grünen Kästen im Lesebereich.
 
 **The Ein-Stempel-Farbe Rule.** Pflaume gehört dem Stempel, dem Fokus und dem Cursor. Stempel unterscheiden sich nie über Farbe.
 
@@ -229,7 +231,7 @@ Ein Bogen mit Randspalte. Der Inhalt sitzt auf `.sheet` (max. 90rem, seitlicher 
 
 ## Elevation & Depth
 
-Das System ist flach; es gibt keinen einzigen `box-shadow`. Tiefe entsteht aus Material: die 7px dunklere Mappenkante unter dem Kopf und über dem Fuß, die schräg geklebten Leinenband-Streifen über Logo und Leitfoto, die 1px-Linien in Tinte (Kopfzeilen) und Etikettgrau (Streifen, Felder). Einzige Ebene ist der Bildbetrachter: ein natives `<dialog>` auf Bogengrund über einem Tintenschleier (82 %).
+Das System ist flach; es gibt keinen einzigen `box-shadow`. Tiefe entsteht aus Material: die 5px grüne Mappenkante unter dem Kopf, die 7px dunklere Kante über dem Fuß, die schräg geklebten Leinenband-Streifen über Logo und Leitfoto, die 1px-Linien in Tinte (Kopfzeilen) und Etikettgrau (Streifen, Felder). Einzige Ebene ist der Bildbetrachter: ein natives `<dialog>` auf Bogengrund über einem Tintenschleier (82 %).
 
 **The Flacher-Bogen Rule.** Nichts schwebt. Wo etwas hervortreten soll, wird es geklebt, gestempelt oder unterstrichen, nie beschattet.
 
