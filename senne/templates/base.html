@@ -59,8 +59,8 @@
  <div class="foot-inner">
   <p>&copy; {% now "Y" %} Naturschutz-Stiftung Senne</p>
   <nav aria-label="Rechtliches">
-    <a href="{% url 'pages' url='datenschutz/' %}">Datenschutz</a>
-    <a href="{% url 'pages' url='impressum/' %}">Impressum</a>
+    <a href="{% url 'pages' slug='datenschutz' %}">Datenschutz</a>
+    <a href="{% url 'pages' slug='impressum' %}">Impressum</a>
     {% if user.is_staff %}
       <a href="https://docs.sennearchiv.de">Dokumentation</a>
       <a href="{% url 'admin:index' %}">Adminbereich</a>
