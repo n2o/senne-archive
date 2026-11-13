@@ -46,6 +46,21 @@ class ArchiveViewsTest(TestCase):
         # Unknown facet values are ignored instead of filtering everything away.
         self.assertContains(self.get("/archiv/?jahrzehnt=1&art=Unsinn"), "2 Belege")
 
+    def test_typo_years_count_as_undated(self):
+        Item.objects.filter(pk=self.public.pk).update(year=1980)
+        for year in (-11975, 5, 11985, None):
+            Item.objects.create(title=f"Tippfehler {year}", medart="Buch", year=year)
+        response = self.get("/archiv/")
+        self.assertEqual(response.context["decades"], [("1980", "1980er", 1), ("ohne", "ohne Jahr", 4)])
+        undated = self.get("/archiv/?jahrzehnt=ohne")
+        self.assertContains(undated, "4 Belege")
+        self.assertNotContains(undated, "anno 11985")
+        # A typo just past the range belongs to "ohne Jahr" only, never to the 2100 decade.
+        Item.objects.create(title="Tippfehler 2105", medart="Buch", year=2105)
+        self.assertFalse(Item.objects.in_decade("2100").exists())
+        # Typos sort after the dated items instead of first.
+        self.assertEqual(list(response.context["items"])[0], self.public)
+
     def test_detail_links_back_to_the_results_it_came_from(self):
         url = f"/archiv/{self.public.pk}"
         response = self.client.get(url, secure=True, HTTP_REFERER="https://testserver/archiv/?q=heide")

@@ -4,8 +4,9 @@
 
 {% block content %}
 <div class="archive">
-  {% if decades %}
+  {% if decades or medarts %}
   <aside class="facets" aria-label="Eingrenzen">
+    {% if decades %}
     <h2>Jahrzehnte</h2>
     <ul class="decades">
       {% for value, label, count in decades %}
@@ -14,6 +15,8 @@
         </li>
       {% endfor %}
     </ul>
+    {% endif %}
+    {% if medarts %}
     <h2>Medienart</h2>
     <ul class="medarts">
       {% for value, count in medarts %}
@@ -22,6 +25,7 @@
         </li>
       {% endfor %}
     </ul>
+    {% endif %}
   </aside>
   {% endif %}
 
@@ -53,7 +57,7 @@
           <h2><a href="{% url 'archive:details' pk=item.pk %}">{{ item.title }}</a></h2>
           <p class="fields">
             {% if item.author %}<span><i>Autor</i><a href="{% url 'archive:index' %}?autor={{ item.author.pk }}">{{ item.author }}</a></span>{% endif %}
-            {% if item.year %}<span><i>Jahr</i><span class="anno">anno {{ item.year }}</span></span>{% endif %}
+            {% if item.dated_year %}<span><i>Jahr</i><span class="anno">anno {{ item.dated_year }}</span></span>{% endif %}
             <span><i>Art</i>{{ item.medart }}</span>
             {% if user.is_staff %}<a class="edit-inline" href="{% url 'admin:archive_item_change' item.pk %}">bearbeiten<span class="visually-hidden">: {{ item.title }}</span></a>{% endif %}
           </p>

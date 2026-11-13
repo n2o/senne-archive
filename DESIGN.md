@@ -282,7 +282,7 @@ Der Weg zur Datei: Stempel (z. B. PDF), Dateiname, rechts die Aktion „öffnen�
 Spectral SC 600, 0.06em Laufweite, Pflaume, Rahmen nach der Stempelform-Regel; im Belegkopf vergrößert auf 1.375rem.
 
 ### Tafeln (Startseite)
-Stiftungsfotos als Raster 2fr/1fr, das Leitfoto über zwei Zeilen und mit zwei Leinenband-Streifen aufgezogen. Bilder öffnen im Bildbetrachter (`<dialog>`, Einblendung 0.35s, bei reduzierter Bewegung ohne Animation).
+Ein einzelnes Leitfoto der Stiftung im Format 4:3 neben dem Einleitungstext, mit zwei Leinenband-Streifen aufgezogen; die Startseite bleibt bewusst bildarm. Bilder öffnen im Bildbetrachter (`<dialog>`, Einblendung 0.35s, bei reduzierter Bewegung ohne Animation).
 
 ## Do's and Don'ts
 

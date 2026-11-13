@@ -1,7 +1,22 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Author, Item
+from .models import DATED, Author, Item
+
+
+class TypoYearFilter(admin.SimpleListFilter):
+    """Finds years outside 1000–2100 (typos such as 19855); they show as "ohne Jahr" on the site."""
+
+    title = "Jahr"
+    parameter_name = "jahr"
+
+    def lookups(self, request, model_admin):
+        return [("unplausibel", "unplausibel (Tippfehler)")]
+
+    def queryset(self, request, queryset):
+        if self.value() == "unplausibel":
+            return queryset.filter(~DATED, year__isnull=False)
+        return queryset
 
 
 @admin.register(Author)
@@ -46,7 +61,7 @@ class AuthorAdmin(VersionAdmin):
 @admin.register(Item)
 class ItemAdmin(VersionAdmin):
     list_display = ("title", "author", "medart", "public", "modified")
-    list_filter = ["medart", "year", "author", "public"]
+    list_filter = [TypoYearFilter, "medart", "year", "author", "public"]
     search_fields = ["title", "author__lastname", "abstract"]
     save_as = True
     readonly_fields = ["created", "modified"]

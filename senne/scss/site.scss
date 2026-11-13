@@ -76,14 +76,16 @@ a:hover { text-decoration-thickness: 2px; }
   gap: 1.25rem var(--gutter);
 }
 
-.mount {
+// Two strips of linen tape hold something on the sheet, like a specimen on its voucher.
+@mixin tape($w, $h) {
   position: relative;
+  &::before, &::after { content: ""; position: absolute; z-index: 1; width: $w; height: $h; background: var(--tape); }
+}
+
+.mount {
+  @include tape(2.9rem, 0.95rem);
   align-self: start;
   width: clamp(7rem, 12vw, 10.5rem);
-  // Two strips of linen tape hold the logo on the folder, like a specimen on its sheet.
-  &::before, &::after {
-    content: ""; position: absolute; width: 2.9rem; height: 0.95rem; background: var(--tape);
-  }
   &::before { top: -0.6rem; right: -0.8rem; transform: rotate(8deg); }
   &::after { bottom: -0.4rem; left: -0.75rem; transform: rotate(-6deg); }
 }
@@ -304,18 +306,13 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
   span { display: block; font: 400 0.8125rem/1.4 var(--mono); color: var(--soft); }
 }
 
-.plates {
-  display: grid; grid-template-columns: 2fr 1fr; grid-auto-rows: 1fr; gap: 0.875rem;
-  li { overflow: hidden; }
-  .plate-main { grid-row: span 2; position: relative; overflow: visible; }
-  // The lead photo is taped onto the sheet like the logo on the folder.
-  .plate-main::before, .plate-main::after {
-    content: ""; position: absolute; z-index: 1; width: 3.5rem; height: 1.1rem; background: var(--tape);
-  }
-  .plate-main::before { top: -0.5rem; left: 1.5rem; transform: rotate(-4deg); }
-  .plate-main::after { bottom: -0.5rem; right: 1.5rem; transform: rotate(5deg); }
-  img { width: 100%; height: 100%; object-fit: cover; }
-  a { display: block; height: 100%; }
+// The lead photo is taped onto the sheet like the logo on the folder.
+.lead-photo {
+  @include tape(3.5rem, 1.1rem);
+  display: block;
+  &::before { top: -0.5rem; left: 1.5rem; transform: rotate(-4deg); }
+  &::after { bottom: -0.5rem; right: 1.5rem; transform: rotate(5deg); }
+  img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 15%; } // keep the horizon
 }
 
 .block {
@@ -327,7 +324,7 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
   .block-image img { width: 100%; max-height: 24rem; object-fit: cover; }
 }
 @media (min-width: 60.0625rem) {
-  .intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+  .intro:has(.lead-photo) { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
   // Text and picture alternate sides from block to block (block-flip comes from the template).
   .block:has(.block-image) { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
   .block-flip:has(.block-image) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); .block-image { order: -1; } }
@@ -416,5 +413,4 @@ h1, h2 { font-weight: 600; line-height: 1.2; text-wrap: balance; hyphens: auto; 
   .beleg-head { grid-template-columns: 1fr; .stamps { justify-content: flex-start; margin-top: 0.75rem; } }
   .beleg { --indent: 0; }
   .doc-link { grid-template-columns: auto 1fr; .doc-action { grid-column: 2; } }
-  .plates { grid-template-columns: 1fr 1fr; .plate-main { grid-column: span 2; grid-row: auto; } }
 }

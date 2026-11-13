@@ -20,32 +20,18 @@
       <h2 class="decade-title">Zuletzt aufgenommen</h2>
       <ul class="recent">
         {% for item in recent %}
-          <li><a href="{% url 'archive:details' pk=item.pk %}">{{ item.title }}</a><span>{{ item.medart }}{% if item.year %} · {{ item.year }}{% endif %}</span></li>
+          <li><a href="{% url 'archive:details' pk=item.pk %}">{{ item.title }}</a><span>{{ item.medart }}{% if item.dated_year %} · {{ item.dated_year }}{% endif %}</span></li>
         {% endfor %}
       </ul>
     {% endif %}
   </div>
-  {% if frontpage %}
-    <ul class="plates">
-      {% if frontpage.image1_leading %}
-        <li class="plate-main">
-          <a href="{{ frontpage.image1_leading.url }}" data-viewer="Impression aus der Senne">
-            {% thumbnail frontpage.image1_leading "720" as img %}
-              <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="Impression aus der Senne">
-            {% endthumbnail %}
-          </a>
-        </li>
-      {% endif %}
-      {% for image in frontpage.secondary_images %}
-        <li>
-          <a href="{{ image.url }}" data-viewer="Impression aus der Senne">
-            {% thumbnail image "350" as img %}
-              <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="Impression aus der Senne" loading="lazy">
-            {% endthumbnail %}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
+  {% if frontpage.image1_leading %}
+    {# One photo, taped onto the sheet; the other two leading images stay in the admin but are not shown. #}
+    <a class="lead-photo" href="{{ frontpage.image1_leading.url }}" data-viewer="Impression aus der Senne">
+      {% thumbnail frontpage.image1_leading "720" as img %}
+        <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="Impression aus der Senne">
+      {% endthumbnail %}
+    </a>
   {% endif %}
 </section>
 
