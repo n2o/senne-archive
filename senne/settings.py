@@ -98,6 +98,8 @@ USE_I18N = True
 USE_TZ = True
 
 SITE_ID = 1
+# Canonical URLs have no trailing slash; senne/urls.py redirects /x/ -> /x.
+APPEND_SLASH = False
 
 # Static files: built into the image (collectstatic) and served by WhiteNoise.
 STATIC_URL = "/static/"
