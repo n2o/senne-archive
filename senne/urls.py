@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.flatpages import views as flatpages
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 from archive import views as archive_views
 from frontpage import views
@@ -18,4 +18,5 @@ if settings.S3_BUCKET:
 elif settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += [path("<path:url>", flatpages.flatpage, name="pages")]
+# Only paths ending in "/": a slashless URL stays unresolved, so APPEND_SLASH redirects /archiv -> /archiv/.
+urlpatterns += [re_path(r"^(?P<url>.*/)$", flatpages.flatpage, name="pages")]

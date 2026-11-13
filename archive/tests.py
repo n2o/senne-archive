@@ -115,3 +115,7 @@ class FlatpageTest(TestCase):
         response = self.client.get("/impressum/", secure=True)
         self.assertContains(response, "<h2>Angaben</h2>", html=True)
         self.assertEqual(self.client.get("/impressum", secure=True).status_code, 301)
+
+    def test_missing_slash_redirects_and_unknown_is_404(self):
+        self.assertRedirects(self.client.get("/archiv", secure=True), "/archiv/", 301, fetch_redirect_response=False)
+        self.assertEqual(self.client.get("/gibt-es-nicht/", secure=True).status_code, 404)
